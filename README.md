@@ -15,7 +15,9 @@ Things you may want to cover:
   rbenv 1.1.0-2-g4f8925a
   
 * System dependencies
+
   Ubuntu 16-04
+  
   sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev gcc-multilib g++-multilib 
   
 * Instalation
