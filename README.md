@@ -21,18 +21,27 @@ Things you may want to cover:
 * Instalation
  
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  
   echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+  
   echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+  
   source ~/.bashrc
+  
   git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  
   rbenv install 2.5.1
+  
   echo "gem: --no-document" > ~/.gemrc
+  
   gem install bundler
   
   Clone the Project and cd into the project dir
   
   bundler
+  
   bundle exec rake db:migrate
+  
   rails s -b <localIP> -p <Port>
   
 * Configuration
