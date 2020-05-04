@@ -1,0 +1,12 @@
+<ul>
+  <li><%= @product.id %></li>
+  <li><%= @product.name %></li>
+</ul>
+
+<ul>
+  <%@product.images.each do |img| %>
+    <li>
+      <%= image_tag url_for(img) %>
+    </li>
+  <% end %>
+</ul>
