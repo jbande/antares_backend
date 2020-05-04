@@ -44,6 +44,8 @@ Things you may want to cover:
   
   bundle exec rake db:migrate
   
+  Create config/master.key file and copy local master.key content to the file.
+  
   rails s -b <localIP> -p <Port>
   
 * Configuration
