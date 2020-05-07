@@ -6,5 +6,7 @@ module Types
     field :email, String, null: false
     field :products, [Types::ProductType], null: false
     field :offers, [Types::OfferType], null: false
+
+    field :tours, [Types::TourType], null: false
   end
 end

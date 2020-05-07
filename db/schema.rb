@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_01_134718) do
+ActiveRecord::Schema.define(version: 2020_05_07_030820) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -86,6 +86,64 @@ ActiveRecord::Schema.define(version: 2020_05_01_134718) do
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
+  create_table "tour_days", force: :cascade do |t|
+    t.integer "tour_id", null: false
+    t.text "description"
+    t.integer "day_number"
+    t.string "day_title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tour_id"], name: "index_tour_days_on_tour_id"
+  end
+
+  create_table "tour_excludes", force: :cascade do |t|
+    t.integer "tour_id", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tour_id"], name: "index_tour_excludes_on_tour_id"
+  end
+
+  create_table "tour_includes", force: :cascade do |t|
+    t.integer "tour_id", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tour_id"], name: "index_tour_includes_on_tour_id"
+  end
+
+  create_table "tour_plus", force: :cascade do |t|
+    t.integer "tour_id", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tour_id"], name: "index_tour_plus_on_tour_id"
+  end
+
+  create_table "tour_suplements", force: :cascade do |t|
+    t.integer "tour_id", null: false
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tour_id"], name: "index_tour_suplements_on_tour_id"
+  end
+
+  create_table "tours", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "title"
+    t.text "description"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "duration"
+    t.string "duration_unit"
+    t.integer "status"
+    t.integer "price_adults"
+    t.integer "price_kids"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_tours_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -101,4 +159,10 @@ ActiveRecord::Schema.define(version: 2020_05_01_134718) do
   add_foreign_key "notifications", "users"
   add_foreign_key "offers", "products"
   add_foreign_key "offers", "users"
+  add_foreign_key "tour_days", "tours"
+  add_foreign_key "tour_excludes", "tours"
+  add_foreign_key "tour_includes", "tours"
+  add_foreign_key "tour_plus", "tours"
+  add_foreign_key "tour_suplements", "tours"
+  add_foreign_key "tours", "users"
 end

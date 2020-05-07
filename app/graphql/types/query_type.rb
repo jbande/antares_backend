@@ -11,10 +11,15 @@ module Types
     field :my_inspectors, [InspectorType], resolver: Resolvers::InspectorSearch
     field :my_notifications, [NotificationType], resolver: Resolvers::NotificationSearch
 
+    field :all_tours, [TourType], null: false
 
 
     def all_users
       User.all
+    end
+
+    def all_tours
+      Tour.all
     end
 
     #def all_offers

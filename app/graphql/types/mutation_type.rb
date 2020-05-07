@@ -9,5 +9,7 @@ module Types
     field :update_offer, mutation: Mutations::UpdateOffer
     field :delete_offer, mutation: Mutations::DeleteOffer
     field :create_inspector, mutation: Mutations::CreateInspector
+
+    field :create_tour, mutation: Mutations::CreateTour
   end
 end
