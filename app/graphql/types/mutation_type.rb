@@ -11,5 +11,10 @@ module Types
     field :create_inspector, mutation: Mutations::CreateInspector
 
     field :create_tour, mutation: Mutations::CreateTour
+    field :update_tour_includes, mutation: Mutations::UpdateTourIncludes
+    field :update_tour_excludes, mutation: Mutations::UpdateTourExcludes
+    field :update_tour_plus, mutation: Mutations::UpdateTourPlus
+    field :update_tour_suplements, mutation: Mutations::UpdateTourSuplement
+    field :update_tour_days, mutation: Mutations::UpdateTourDays
   end
 end
