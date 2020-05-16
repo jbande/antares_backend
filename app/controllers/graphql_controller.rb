@@ -31,7 +31,9 @@ class GraphqlController < ApplicationController
 
   def api_current_user
 
-    return unless request.headers['token']
+    return unless request.headers.key? 'token'
+    return unless request.header['token']
+
 
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
     token = crypt.decrypt_and_verify request.headers['token']
