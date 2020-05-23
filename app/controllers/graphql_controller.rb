@@ -11,8 +11,6 @@ class GraphqlController < ApplicationController
 
     cur_user = current_user
     unless cur_user
-      puts 'getting current ser from api'
-      puts request.headers['token']
       cur_user = api_current_user
     end
 
@@ -33,11 +31,9 @@ class GraphqlController < ApplicationController
 
   def api_current_user
 
-
     return unless request.headers.key? 'token'
-    return unless request.headers['token'].blank?
-    return unless request.headers['token'] == 'null'
-
+    return if request.headers['token'].blank?
+    return if request.headers['token'] == 'null'
 
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
     token = crypt.decrypt_and_verify request.headers['token']
