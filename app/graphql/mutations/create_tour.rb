@@ -11,12 +11,16 @@ module Mutations
     end
 
     argument :tour, TourInputData, required: false
-
+    argument :on_behalf_of_user, Int, required:false
     type Types::TourType
 
-    def resolve(tour: nil)
+    def resolve(tour: nil, on_behalf_of_user: nil)
 
-      current_user = context[:current_user]
+      if on_behalf_of_user
+        current_user = User.find_by_id on_behalf_of_user
+      else
+        current_user = context[:current_user]
+      end
 
       new_tour = Tour.new(tour&.[](:tour_data).to_h)
 
