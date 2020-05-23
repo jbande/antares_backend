@@ -11,6 +11,8 @@ class GraphqlController < ApplicationController
 
     cur_user = current_user
     unless cur_user
+      puts 'getting current ser from api'
+      puts request.headers['token']
       cur_user = api_current_user
     end
 
