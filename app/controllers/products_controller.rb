@@ -6,10 +6,8 @@ class ProductsController < ApplicationController
   end
 
   def show
-
     @product = Product.find_by_id params[:id]
     url = url_for(@product.images[0])
-    byebug
   end
 
   def add_image_form
@@ -20,6 +18,21 @@ class ProductsController < ApplicationController
     product = Product.find_by_id params[:id]
     product.images.attach(params[:product][:images])
     redirect_to show_product_path product
+  end
+
+  def get_images
+
+    @product = Product.find_by_id params[:id]
+
+    images = []
+
+    @product.images.each do |img|
+      images.append({'original': url_for(img),
+       '100x100': url_for(img.variant(resize: "100x100"))})
+    end
+
+    render json: {id:params[:id], images: images}
+
   end
 
 end

@@ -1,9 +1,10 @@
 require 'search_object'
 require 'search_object/plugin/graphql'
 
-class Resolvers::ProductSearch
+class Resolvers::ProductSearch < ApplicationController
   # include SearchObject for GraphQL
   include SearchObject.module(:graphql)
+  include Rails.application.routes.url_helpers
 
   # scope is starting point for search
   scope { Product.all }

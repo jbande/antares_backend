@@ -10,5 +10,6 @@ module Types
     field :expiry_date, String, null: true
     field :produced_date, String, null: true
     field :posted_by, UserType, null: true, method: :user
+    field :images, [ImageType], null: true, method: :images_urls
   end
 end

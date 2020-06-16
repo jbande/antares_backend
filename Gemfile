@@ -43,3 +43,7 @@ gem 'graphiql-rails', '1.7.0', group: :development
 gem 'search_object_graphql', '0.3.1'
 
 gem 'rack-cors'
+
+gem 'image_processing', '~> 1.2'
+
+gem 'kashmir'

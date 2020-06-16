@@ -9,10 +9,12 @@ Rails.application.routes.draw do
 
   get "/products/add_image/:id", to:"products#add_image_form"
 
-  #patch "/products/add_image/:id", to:"products#add_image", as:"product"
-  post "/products/add_image/:id", to:"products#add_image", as:"product"
+  patch "/products/add_image/:id", to:"products#add_image", as:"product"
+  #post "/products/add_image/:id", to:"products#add_image", as:"product"
 
   get "/product/show/:id", to:"products#show", as:"show_product"
+
+  get "/product/images/:id", to:"products#get_images", as:"get_product_images"
 
 
 end

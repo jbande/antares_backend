@@ -8,5 +8,8 @@
     <li>
       <%= image_tag url_for(img) %>
     </li>
+    <li>
+      <%= image_tag img.variant(resize: "100x100") %>
+    </li>
   <% end %>
 </ul>
