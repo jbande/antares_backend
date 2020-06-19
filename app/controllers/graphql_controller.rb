@@ -2,10 +2,16 @@ class GraphqlController < ApplicationController
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
   # but you'll have to authenticate your user separately
-  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
+
+  #protect_from_forgery with: :null_session
+
 
   def execute
+
     variables = ensure_hash(params[:variables])
+
+    # This is because when using ajax call ints are converted to strings
     query = params[:query]
     operation_name = params[:operationName]
 

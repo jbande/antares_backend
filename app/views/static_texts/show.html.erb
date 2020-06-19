@@ -1,0 +1,19 @@
+
+<div class="row" id="static_texts">
+  <div class="col-lg-12">
+    <h4>Static Texts</h4>
+  </div>
+  <div class="col-lg-12">
+    <ol>
+      <li v-for="static_text in static_texts">
+        {{ static_text.text }}
+      </li>
+    </ol>
+  </div>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Edit', edit_static_text_path(@static_text) %> |
+<%= link_to 'Back', static_texts_path %>
+<%= javascript_include_tag "static_texts_app.js" %>

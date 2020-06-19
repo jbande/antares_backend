@@ -18,17 +18,11 @@ class Product < ApplicationRecord
   end
 
   def images_urls
-
     images = []
-
     self.images.each do |img|
-
       new_type = Image.new(img)
-
       images.append(new_type)
-
     end
-
     return images
   end
 

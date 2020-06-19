@@ -1,0 +1,6 @@
+<%= form_with model: @static_image, local: true do |form| %>
+    <%= form.text_field :page_position, placeholder: "page position" %><br>
+
+    <%= form.file_field :images, multiple: true %><br>
+    <%= form.submit %>
+<% end %>

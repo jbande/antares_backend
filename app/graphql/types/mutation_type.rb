@@ -16,5 +16,9 @@ module Types
     field :update_tour_plus, mutation: Mutations::UpdateTourPlus
     field :update_tour_suplements, mutation: Mutations::UpdateTourSuplement
     field :update_tour_days, mutation: Mutations::UpdateTourDays
+
+    field :create_static_text, mutation: Mutations::CreateStaticText
+    field :update_static_text, mutation: Mutations::UpdateStaticText
+    field :delete_static_text, mutation: Mutations::DeleteStaticText
   end
 end

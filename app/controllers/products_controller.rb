@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   include Rails.application.routes.url_helpers
 
   def index
-    @products = Product.all
+    @static_image = Product.all
   end
 
   def show
@@ -21,18 +21,13 @@ class ProductsController < ApplicationController
   end
 
   def get_images
-
     @product = Product.find_by_id params[:id]
-
     images = []
-
     @product.images.each do |img|
       images.append({'original': url_for(img),
        '100x100': url_for(img.variant(resize: "100x100"))})
     end
-
     render json: {id:params[:id], images: images}
-
   end
 
 end

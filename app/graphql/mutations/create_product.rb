@@ -41,7 +41,7 @@ module Mutations
 
     def resolve(id: nil, name: nil, description: nil, maker: nil, brand: nil, model: nil, stock: nil, expiry_date: nil, produced_date: nil)
       current_user = context[:current_user]
-      product = current_user.products.find_by_id(id)
+      product = current_user.static_image.find_by_id(id)
       if product
         product.update_on_changes(
             name: name,
@@ -68,7 +68,7 @@ module Mutations
 
     def resolve(id: nil)
       current_user = context[:current_user]
-      product = current_user.products.find_by_id(id)
+      product = current_user.static_image.find_by_id(id)
       if product
         product.destroy
         result = {ret: 'OK', code: 'SUCCESS', msg:'object deleted'}

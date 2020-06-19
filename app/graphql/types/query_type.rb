@@ -12,7 +12,9 @@ module Types
     field :my_notifications, [NotificationType], resolver: Resolvers::NotificationSearch
 
     field :all_tours, [TourType], null: false
+    field :all_static_texts, [StaticTextType], null: false
 
+    field :all_static_images, [StaticImageType], null: false
 
     def all_users
       User.all
@@ -20,6 +22,14 @@ module Types
 
     def all_tours
       Tour.all
+    end
+
+    def all_static_texts
+      StaticText.all
+    end
+
+    def all_static_images
+      StaticImage.all
     end
 
     #def all_offers

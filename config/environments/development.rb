@@ -56,4 +56,6 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options[:host] = 'localhost:3444'
 
+  #Rails.application.config.action_controller.forgery_protection_origin_check = false
+
 end

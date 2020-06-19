@@ -1,0 +1,16 @@
+<ul>
+  <li><%= @static_image.id %></li>
+  <li><%= @static_image.page_position %></li>
+</ul>
+
+<% unless @static_image.image.blank? %>
+<ul>
+
+    <li>
+      <%= image_tag url_for(@static_image.image) %>
+    </li>
+    <li>
+      <%= image_tag @static_image.image.variant(resize: "100x100") %>
+    </li>
+</ul>
+<% end %>

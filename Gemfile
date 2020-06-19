@@ -47,3 +47,8 @@ gem 'rack-cors'
 gem 'image_processing', '~> 1.2'
 
 gem 'kashmir'
+
+gem 'jquery-rails'
+
+#gem 'bootstrap', '~> 4.0.0'
+
