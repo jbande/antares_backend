@@ -68,7 +68,7 @@ module Mutations
 
     def resolve(id: nil)
       current_user = context[:current_user]
-      product = current_user.static_image.find_by_id(id)
+      product = current_user.products.find_by_id(id)
       if product
         product.destroy
         result = {ret: 'OK', code: 'SUCCESS', msg:'object deleted'}
@@ -79,5 +79,45 @@ module Mutations
     end
   end
 
+  class AssignProductToCategory < BaseMutation
+
+    argument :category_id, Integer, required: false
+    argument :id, Integer, required: true
+    type Types::ProductType
+
+    def resolve(id: nil, category_id: nil)
+      current_user = context[:current_user]
+      product = current_user.products.find_by_id(id)
+      if product
+        category = Category.find_by_id category_id
+        if category
+          category.products.append(product)
+          category.save
+        end
+      end
+      product
+    end
+  end
+
+  class UnassignProductToCategory < BaseMutation
+
+    argument :category_id, Integer, required: false
+    argument :id, Integer, required: true
+
+    type Types::ProductType
+
+    def resolve(id: nil, category_id: nil)
+      current_user = context[:current_user]
+      product = current_user.products.find_by_id(id)
+      if product
+        category = Category.find_by_id category_id
+        if category
+          category.products.delete(product)
+          category.save
+        end
+      end
+      product
+    end
+  end
 
 end

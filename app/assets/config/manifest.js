@@ -8,3 +8,4 @@
 //= link vue.js
 //= link app.js
 //= link static_texts_app.js
+//= link static_images_app.js

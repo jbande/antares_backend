@@ -15,6 +15,7 @@ module Types
     field :all_static_texts, [StaticTextType], null: false
 
     field :all_static_images, [StaticImageType], null: false
+    field :all_categories, [CategoryType], null: false
 
     def all_users
       User.all
@@ -30,6 +31,10 @@ module Types
 
     def all_static_images
       StaticImage.all
+    end
+
+    def all_categories
+      Category.all
     end
 
     #def all_offers

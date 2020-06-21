@@ -44,7 +44,6 @@ var static_texts_app = new Vue({
     methods: {
 
         activateEdition: function (static_text) {
-            console.log(static_text);
             static_text.editing = true;
         },
 
@@ -89,7 +88,6 @@ var static_texts_app = new Vue({
         },
 
         saveStaticText: function (new_static_text) {
-            console.log(new_static_text);
 
             var static_text_query = `mutation ($pagePosition:String!, $language:String!, $text:String) {
                 createStaticText(

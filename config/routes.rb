@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
 
 
-  get "/static_image", to:"static_images#index"#, as: "static_image"
+  get "/static_image", to:"static_images#index", as: "static_image_index"
 
   get "/static_image/new", to:"static_images#new"#, as: "static_image"
 

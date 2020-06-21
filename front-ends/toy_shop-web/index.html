@@ -52,11 +52,11 @@
                   <ul>
                      <li>
                         <span class="fas fa-phone-volume"></span>
-                        <p>{{ contactphone }}</p>
+                        <p>{{ contactphone.text }}</p>
                      </li>
                      <li>
                         <span class="fas fa-envelope"></span>
-                        <p><a href="mailto:info@example.com">{{ mailto }}</a></p>
+                        <p><a href="mailto:info@example.com">{{ mailto.text }}</a></p>
                      </li>
                      <li>
                      </li>
@@ -66,7 +66,7 @@
             <div class="container-fluid">
                <div class="hedder-up row">
                   <div class="col-lg-3 col-md-3 logo-head">
-                     <h1><a class="navbar-brand" href="index.html">{{ sitetittle }}</a></h1>
+                     <h1><a class="navbar-brand" href="index.html">{{ sitetittle.text }}</a></h1>
                   </div>
                   <div class="col-lg-5 col-md-6 search-right">
                      <form class="form-inline my-lg-0">
@@ -104,15 +104,15 @@
                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                   <ul class="navbar-nav ">
                      <li class="nav-item active">
-                        <a class="nav-link" href="index.html"> {{ hometab }} <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.html"> {{ hometab.text }} <span class="sr-only">(current)</span></a>
                      </li>
 
                      <li class="nav-item">
-                        <a href="about.html" class="nav-link">{{ abouttab }}</a>
+                        <a href="about.html" class="nav-link">{{ abouttab.text }}</a>
                      </li>
 
                      <li class="nav-item">
-                        <a href="service.html" class="nav-link">{{ servicetab }}</a>
+                        <a href="service.html" class="nav-link">{{ servicetab.text }}</a>
                      </li>
 
                      <li class="nav-item">
@@ -154,9 +154,9 @@
                      <div class="slider-img one-img">
                         <div class="container">
                            <div class="slider-info ">
-                              <h5>{{ heading1 }} <br> {{ heading11 }} </h5>
+                              <h5>{{ heading1.text }} <br> {{ heading11.text }} </h5>
                               <div class="bottom-info">
-                                 <p>{{ heading1text }}</p>
+                                 <p>{{ heading1text.text }}</p>
                               </div>
                               <div class="outs_more-buttn">
                                  <a href="about.html">Read More</a>
@@ -212,20 +212,20 @@
             <div class="row banner-below-w3l">
                <div class="col-lg-4 col-md-6 col-sm-6 text-center banner-agile-flowers">
                   
-                  <img :src="pane6" class="img-thumbnail" alt="">
+                  <img :src="pane6.v100100" class="img-thumbnail" alt="">
 
                   <div class="banner-right-icon">
                      <h4 class="pt-3">Baby Toys</h4>
                   </div>
                </div>
                <div class="col-lg-4 col-md-6 col-sm-6 text-center banner-agile-flowers">
-                  <img src="images/a2.jpg" class="img-thumbnail" alt="">
+                  <img :src="image78.v100100" class="img-thumbnail" alt="">
                   <div class="banner-right-icon">
                      <h4 class="pt-3">Lite-Brite</h4>
                   </div>
                </div>
                <div class="col-lg-4 col-md-6 col-sm-6 text-center banner-agile-flowers">
-                  <img src="images/a3.jpg" class="img-thumbnail" alt="">
+                  <img :src="bp_img_3.v100100" class="img-thumbnail" alt="">
                   <div class="banner-right-icon">
                      <h4 class="pt-3">Key Toys</h4>
                   </div>

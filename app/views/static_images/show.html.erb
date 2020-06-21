@@ -1,3 +1,5 @@
+<a href="<%= static_image_index_path %>">Static images</a>
+
 <ul>
   <li><%= @static_image.id %></li>
   <li><%= @static_image.page_position %></li>
@@ -5,7 +7,6 @@
 
 <% unless @static_image.image.blank? %>
 <ul>
-
     <li>
       <%= image_tag url_for(@static_image.image) %>
     </li>

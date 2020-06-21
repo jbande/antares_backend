@@ -1,4 +1,5 @@
 class StaticImagesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   include Rails.application.routes.url_helpers
 
   def index
@@ -15,8 +16,6 @@ class StaticImagesController < ApplicationController
   end
 
   def create
-    #byebug
-
     page_position = params.require(:static_image).permit(:page_position)["page_position"]
 
     image = params.require(:static_image).permit(images: [])["images"][0]
@@ -33,7 +32,6 @@ class StaticImagesController < ApplicationController
   end
 
   def update
-    #byebug
 
     id = params.require(:static_image).require(:id)
 
