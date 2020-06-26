@@ -11,12 +11,15 @@ module Types
     field :prince_adults, Integer, null: true
     field :price_kids, Integer, null: true
 
+    field :descriptions, [Types::DescriptionType], null: true
+
     field :tour_includes, [Types::TourIncludesType], null: true
     field :tour_excludes, [Types::TourExcludesType], null: true
     field :tour_suplements, [Types::TourSuplementType], null: true
     field :tour_plus, [Types::TourPlusType], null: true
     field :tour_days, [Types::TourDayType], null: true
 
+    field :images, [ImageType], null: true, method: :images_urls
 
     field :user, Types::UserType, null: true
   end

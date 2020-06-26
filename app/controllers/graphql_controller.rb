@@ -5,7 +5,7 @@ class GraphqlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   #protect_from_forgery with: :null_session
-
+  include UsersHelper::Access
 
   def execute
 
@@ -15,10 +15,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
 
-    cur_user = current_user
-    unless cur_user
-      cur_user = api_current_user
-    end
+    cur_user = get_current_user
 
     context = {
       # Query context goes here, for example:
@@ -35,33 +32,41 @@ class GraphqlController < ApplicationController
 
   private
 
-  def api_current_user
-
-    return unless request.headers.key? 'token'
-    return if request.headers['token'].blank?
-    return if request.headers['token'] == 'null'
-
-    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify request.headers['token']
-
-    user_id = token.gsub('user-id:', '').to_i
-    User.find user_id
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
-    nil
-  end
-
-  def current_user
-
-    return unless session[:token]
-
-    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify session[:token]
-    
-    user_id = token.gsub('user-id:', '').to_i
-    User.find user_id
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
-    nil
-  end
+  # def get_current_user
+  #   cur_user = current_user
+  #   unless cur_user
+  #     cur_user = api_current_user
+  #   end
+  #   return
+  # end
+  #
+  # def api_current_user
+  #
+  #   return unless request.headers.key? 'token'
+  #   return if request.headers['token'].blank?
+  #   return if request.headers['token'] == 'null'
+  #
+  #   crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+  #   token = crypt.decrypt_and_verify request.headers['token']
+  #
+  #   user_id = token.gsub('user-id:', '').to_i
+  #   User.find user_id
+  # rescue ActiveSupport::MessageVerifier::InvalidSignature
+  #   nil
+  # end
+  #
+  # def current_user
+  #
+  #   return unless session[:token]
+  #
+  #   crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
+  #   token = crypt.decrypt_and_verify session[:token]
+  #
+  #   user_id = token.gsub('user-id:', '').to_i
+  #   User.find user_id
+  # rescue ActiveSupport::MessageVerifier::InvalidSignature
+  #   nil
+  # end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)

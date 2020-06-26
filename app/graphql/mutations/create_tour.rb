@@ -5,6 +5,8 @@ module Mutations
       argument :tour_includes, [Types::TourIncludesTypeInput], required: false
       argument :tour_excludes, [Types::TourExcludesTypeInput], required: false
       argument :tour_suplements, [Types::TourSuplementTypeInput], required: false
+      argument :descriptions, [Types::DescriptionTypeInput], required: true
+
       argument :tour_days, [Types::TourDayTypeInput], required: false
       argument :tour_plus, [Types::TourPlusTypeInput], required: false
       argument :tour_data, Types::TourTypeInput, required: false
@@ -23,6 +25,12 @@ module Mutations
       end
 
       new_tour = Tour.new(tour&.[](:tour_data).to_h)
+
+      if tour&.[](:descriptions)
+        tour&.[](:descriptions).each do |item|
+          new_tour.descriptions.append(Description.new(item.to_h))
+        end
+      end
 
       if tour&.[](:tour_includes)
         tour&.[](:tour_includes).each do |item|
@@ -169,5 +177,4 @@ module Mutations
       upd_tour
     end
   end
-
 end

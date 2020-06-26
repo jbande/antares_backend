@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_20_184024) do
+ActiveRecord::Schema.define(version: 2020_06_25_034823) do
+
+  create_table "accommodations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name"
+    t.integer "status", default: 0
+    t.integer "relevance", default: 0
+    t.boolean "banned", default: false
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "main_image_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_accommodations_on_user_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -53,6 +66,16 @@ ActiveRecord::Schema.define(version: 2020_06_20_184024) do
     t.integer "category_id", null: false
     t.index ["category_id"], name: "index_categories_products_on_category_id"
     t.index ["product_id"], name: "index_categories_products_on_product_id"
+  end
+
+  create_table "descriptions", force: :cascade do |t|
+    t.text "text"
+    t.string "describable_type", null: false
+    t.integer "describable_id", null: false
+    t.string "language"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["describable_type", "describable_id"], name: "index_descriptions_on_describable_type_and_describable_id"
   end
 
   create_table "inspectors", force: :cascade do |t|
@@ -107,6 +130,15 @@ ActiveRecord::Schema.define(version: 2020_06_20_184024) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_products_on_user_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer "accommodation_id", null: false
+    t.integer "room_number", default: 0
+    t.decimal "price", precision: 10, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["accommodation_id"], name: "index_rooms_on_accommodation_id"
   end
 
   create_table "static_images", force: :cascade do |t|
@@ -190,6 +222,7 @@ ActiveRecord::Schema.define(version: 2020_06_20_184024) do
     t.string "password_digest"
   end
 
+  add_foreign_key "accommodations", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories_offers", "categories"
   add_foreign_key "categories_offers", "offers"
@@ -200,6 +233,7 @@ ActiveRecord::Schema.define(version: 2020_06_20_184024) do
   add_foreign_key "notifications", "users"
   add_foreign_key "offers", "products"
   add_foreign_key "offers", "users"
+  add_foreign_key "rooms", "accommodations"
   add_foreign_key "tour_days", "tours"
   add_foreign_key "tour_excludes", "tours"
   add_foreign_key "tour_includes", "tours"

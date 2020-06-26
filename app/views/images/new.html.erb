@@ -1,0 +1,14 @@
+<form enctype="multipart/form-data" action="<%= create_image_url %>" accept-charset="UTF-8" method="post">
+  <input type="hidden" name="authenticity_token">
+  <input type="number" name="entity_id">
+  <label for="static_image_page_position">Entity type</label>
+
+  <input placeholder="page position" type="text" name="entity_type" id="static_image_page_position">
+  <br>
+
+  <label for="static_image_images">Select Image</label>
+  <input multiple="multiple" type="file" name="images[]" id="static_image_images"><br>
+
+  <input type="submit" name="commit" value="Create Static image" data-disable-with="Create Static image">
+
+</form>

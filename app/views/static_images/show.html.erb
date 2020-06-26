@@ -5,13 +5,35 @@
   <li><%= @static_image.page_position %></li>
 </ul>
 
-<% unless @static_image.image.blank? %>
 <ul>
-    <li>
-      <%= image_tag url_for(@static_image.image) %>
-    </li>
-    <li>
-      <%= image_tag @static_image.image.variant(resize: "100x100") %>
-    </li>
+  <% @static_image.images_urls.each do |imgurl| %>
+      <li>
+      <h3>Tiny</h3>
+        <img src="<%= imgurl.tiny %>" alt="">
+      </li>
+      <li>
+        <h3>Card H</h3>
+      <img src="<%= imgurl.card_h %>" alt="">
+      </li>
+      <li>
+        <h3>Card V</h3>
+      <img src="<%= imgurl.card_v %>" alt="">
+      </li>
+      <li>
+        <h3>visor</h3>
+      <img src="<%= imgurl.visor %>" alt="">
+      </li>
+      <li>
+        <h3>visor_prev</h3>
+      <img src="<%= imgurl.visor_prev %>" alt="">
+      </li>
+      <li>
+        <h3>room_card</h3>
+      <img src="<%= imgurl.room_card %>" alt="">
+      </li>
+      <li>
+        <h3>m_card</h3>
+      <img src="<%= imgurl.m_card %>" alt="">
+      </li>
+  <% end %>
 </ul>
-<% end %>

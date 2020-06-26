@@ -10,5 +10,6 @@ class User < ApplicationRecord
   has_many :inspectors
   has_many :notifications
   has_many :tours
+  has_many :accommodations
 
 end

@@ -34,5 +34,12 @@ module Types
     field :delete_category, mutation: Mutations::DeleteCategory
     field :assign_parent_category, mutation: Mutations::AssignParentCategory
 
+    field :create_accommodation, mutation: Mutations::CreateAccommodation
+    field :update_accommodation, mutation: Mutations::UpdateAccommodation
+    field :delete_accommodation, mutation: Mutations::DeleteAccommodation
+
+    field :update_description, mutation: Mutations::UpdateDescription
+    field :delete_description, mutation: Mutations::DeleteDescription
+
   end
 end

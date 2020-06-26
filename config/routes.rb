@@ -41,4 +41,7 @@ Rails.application.routes.draw do
   get '/static_text/edit/:id', to:'static_texts#edit', as: 'edit_static_text'
   get '/static_text/new', to:'static_texts#edit', as: 'new_static_text'
 
+  get '/new/image', to:'images#new', as: 'new_image'
+  post '/create/image', to:'images#create', as: 'create_image'
+
 end

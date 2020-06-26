@@ -17,6 +17,8 @@ module Types
     field :all_static_images, [StaticImageType], null: false
     field :all_categories, [CategoryType], null: false
 
+    field :all_accommodations, [AccommodationType], null: false
+
     def all_users
       User.all
     end
@@ -35,6 +37,10 @@ module Types
 
     def all_categories
       Category.all
+    end
+
+    def all_accommodations
+      Accommodation.all
     end
 
     #def all_offers

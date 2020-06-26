@@ -13,7 +13,10 @@ var static_images_app = new Vue({
                 images:[
                     {
                         original:'',
-                        v100100:''
+                        v100100:'',
+                        tiny:'',
+                        cardH:'',
+                        cardV:''
                     }
                 ]
             }
@@ -30,6 +33,9 @@ var static_images_app = new Vue({
             images {
               original
               v100100
+              cardH
+              cardV
+              tiny
             }
             pagePosition
           }
