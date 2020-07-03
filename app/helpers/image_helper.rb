@@ -1,5 +1,5 @@
-module ApplicationHelper
-  class Image
+module ImageHelper
+  class ImageLoader
     include Rails.application.routes.url_helpers
     include Kashmir
     #ImageProcessing::MiniMagick

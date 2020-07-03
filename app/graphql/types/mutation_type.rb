@@ -41,5 +41,16 @@ module Types
     field :update_description, mutation: Mutations::UpdateDescription
     field :delete_description, mutation: Mutations::DeleteDescription
 
+    field :create_room, mutation: Mutations::CreateRoom
+    field :update_room, mutation: Mutations::UpdateRoom
+    field :delete_room, mutation: Mutations::DeleteRoom
+
+    field :create_region, mutation: Mutations::CreateRegion
+    field :update_region, mutation: Mutations::UpdateRegion
+    field :delete_region, mutation: Mutations::DeleteRegion
+
+    field :create_taxi, mutation: Mutations::CreateTaxi
+    field :update_taxi, mutation: Mutations::UpdateTaxi
+
   end
 end

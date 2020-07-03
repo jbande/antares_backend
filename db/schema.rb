@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_034823) do
+ActiveRecord::Schema.define(version: 2020_06_30_122453) do
 
   create_table "accommodations", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -132,6 +132,15 @@ ActiveRecord::Schema.define(version: 2020_06_25_034823) do
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
+  create_table "regions", force: :cascade do |t|
+    t.string "country_code"
+    t.string "name"
+    t.string "latitude"
+    t.string "longitude"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "accommodation_id", null: false
     t.integer "room_number", default: 0
@@ -153,6 +162,22 @@ ActiveRecord::Schema.define(version: 2020_06_25_034823) do
     t.string "page_position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "taxis", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "title", null: false
+    t.string "brand"
+    t.string "model"
+    t.string "year_built"
+    t.integer "passengers_count"
+    t.decimal "hour_price", precision: 10, scale: 2
+    t.decimal "day_price", precision: 10, scale: 2
+    t.decimal "hour_price_wo_driver", precision: 10, scale: 2
+    t.decimal "day_price_wo_driver", precision: 10, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_taxis_on_user_id"
   end
 
   create_table "tour_days", force: :cascade do |t|
@@ -213,6 +238,17 @@ ActiveRecord::Schema.define(version: 2020_06_25_034823) do
     t.index ["user_id"], name: "index_tours_on_user_id"
   end
 
+  create_table "transfers", force: :cascade do |t|
+    t.integer "taxi_id", null: false
+    t.integer "from"
+    t.integer "to"
+    t.decimal "adult_price", precision: 10, scale: 2
+    t.decimal "child_price", precision: 10, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["taxi_id"], name: "index_transfers_on_taxi_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -234,10 +270,12 @@ ActiveRecord::Schema.define(version: 2020_06_25_034823) do
   add_foreign_key "offers", "products"
   add_foreign_key "offers", "users"
   add_foreign_key "rooms", "accommodations"
+  add_foreign_key "taxis", "users"
   add_foreign_key "tour_days", "tours"
   add_foreign_key "tour_excludes", "tours"
   add_foreign_key "tour_includes", "tours"
   add_foreign_key "tour_plus", "tours"
   add_foreign_key "tour_suplements", "tours"
   add_foreign_key "tours", "users"
+  add_foreign_key "transfers", "taxis"
 end

@@ -11,5 +11,6 @@ class User < ApplicationRecord
   has_many :notifications
   has_many :tours
   has_many :accommodations
+  has_many :taxis
 
 end

@@ -18,6 +18,7 @@ module Types
     field :all_categories, [CategoryType], null: false
 
     field :all_accommodations, [AccommodationType], null: false
+    field :all_regions, [RegionType], null: false
 
     def all_users
       User.all
@@ -40,7 +41,12 @@ module Types
     end
 
     def all_accommodations
-      Accommodation.all
+      #Accommodation.includes(:rooms).all
+      Accommodation.includes(:rooms).all.references(:rooms)
+    end
+
+    def all_regions
+      Region.all
     end
 
     #def all_offers

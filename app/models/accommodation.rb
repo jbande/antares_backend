@@ -1,4 +1,4 @@
-include ApplicationHelper
+include ImageHelper
 class Accommodation < ApplicationRecord
   include Rails.application.routes.url_helpers
   include ModelsHelper
@@ -12,7 +12,7 @@ class Accommodation < ApplicationRecord
   def images_urls
     images = []
     self.images.each do |img|
-      new_type = Image.new(img)
+      new_type = ImageLoader.new(img)
       images.append(new_type)
     end
     return images
