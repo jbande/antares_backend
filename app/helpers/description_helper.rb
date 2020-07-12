@@ -23,5 +23,12 @@ module DescriptionHelper
       destroyed
     end
 
+    def add_descriptions(entity, input_data)
+      if input_data&.[](:descriptions)
+        input_data&.[](:descriptions).each do |item|
+          entity.descriptions.append(Description.new(item.to_h))
+        end
+      end
+    end
   end
 end

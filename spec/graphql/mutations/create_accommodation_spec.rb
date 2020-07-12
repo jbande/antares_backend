@@ -1,68 +1,90 @@
 require 'rails_helper'
-
+require 'wercuba_helper'
 module Mutations
 
   RSpec.describe CreateAccommodation, type: :request do
     describe '.resolve' do
-
-      it 'creates one accommodation' do
-
-        #accommodation = create(:accommodation)
-        #description1 = create(:description)
-        #description2 = create(:description)
-        #accommodation.descriptions.append(description1)
-        #accommodation.descriptions.append(description2)
-
-        expect do
-          post '/graphql', params: { query: query(name: "Casa bella",price: 223.5) },
-               headers: {"token": "qg75rhO4CCWwo0aSO1qWHss+kxY=--zgTKUC5y18CAKUSv--i4lvo3Dmu5zw8X00VWjKJw=="}
-        end.to change { Accommodation.count }.by(1)
+      include WercubaHelper::COMMON
+      before(:each) do
+        create_and_sign_in_user
       end
 
-      # it 'returns a book' do
-      #   author = create(:author)
-      #
-      #   post '/graphql', params: { query: query(author_id: author.id) }
-      #   json = JSON.parse(response.body)
-      #   data = json['data']['createBook']
-      #
-      #   expect(data).to include(
-      #                       'id'              => be_present,
-      #                       'title'           => 'Tripwire',
-      #                       'publicationDate' => 1999,
-      #                       'genre'           => 'Thriller',
-      #                       'author'          => { 'id' => author.id.to_s }
-      #                   )
-      # end
+
+      it 'Create one accommodation' do
+        expect do
+          post '/graphql', params: { query: query(name: "Casa bella", price: 223.5) },
+               headers: {"token": @user_token}
+        end.to change { Accommodation.count }.by(1)
+      end
     end
 
     def query(name:, price:)
       <<~GQL
         mutation {
           createAccommodation(
-            accommodation:{
-              accommodationData:{
+            inputData: {
+              modelData:{
                 name: "#{name}"
                 price: #{price}
-              }
-                          descriptions:[{
-            text: "Mansion Fernandez"
-            language:"es"
-          },
-          {
-            text: "Fernandez residence"
-            language: "en"
-          }
-          ]
+              },
+              descriptions:[
+                {language: "es", text: "Hermosa Casa"},
+                {language: "en", text: "Beautifull House"}
+              ]
             }
           ){
-        id
-        name
-      }
-    }
+            id
+            name
+            price
+            descriptions{
+              language
+              text
+            }
+          }
+        }
       GQL
     end
 
+
+    def mutation_create_user(first_name:, last_name:, email:, password:)
+      <<~GQL
+         mutation{
+         createUser(
+           firstName: "#{first_name}"
+           lastName: "#{last_name}"
+           authProvider:{
+             credentials: {
+               email: "#{email}"
+               password: "#{password}"
+             }
+           }
+         ){
+           id
+           firstName
+           lastName
+         }
+       }
+      GQL
+    end
+
+    def mutation_sign_in_user(email:, password:)
+      <<~GQL
+         mutation{
+           signinUser(
+             credentials: {
+               email: "#{email}",
+               password: "#{password}"
+             }
+           ){
+             token
+             user {
+               id
+             }
+           }
+         }
+      GQL
+
+    end
     # mutation {
     #   createAccommodation(
     #     accommodation:{

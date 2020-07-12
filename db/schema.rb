@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_122453) do
+ActiveRecord::Schema.define(version: 2020_07_07_183009) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "Products", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.text "description"
+    t.string "maker_name", limit: 255
+    t.string "brand", limit: 255
+    t.string "model", limit: 255
+    t.datetime "produced_date"
+    t.datetime "expiry_date"
+    t.integer "stock"
+    t.datetime "createdAt", null: false
+    t.datetime "updatedAt", null: false
+    t.integer "user_id"
+  end
+
+  create_table "SequelizeMeta", primary_key: "name", id: :string, limit: 255, force: :cascade do |t|
+  end
+
+  create_table "Users", id: :serial, force: :cascade do |t|
+    t.string "firstName", limit: 255
+    t.string "lastName", limit: 255
+    t.string "email", limit: 255
+    t.datetime "createdAt", null: false
+    t.datetime "updatedAt", null: false
+  end
 
   create_table "accommodations", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.integer "status", default: 0
     t.integer "relevance", default: 0
@@ -22,14 +50,17 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
     t.integer "main_image_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.index ["latitude", "longitude"], name: "index_accommodations_on_latitude_and_longitude"
     t.index ["user_id"], name: "index_accommodations_on_user_id"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -46,6 +77,25 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "attractions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "features", array: true
+    t.integer "activities", array: true
+    t.string "hash_tags", array: true
+    t.json "languages"
+    t.integer "status", default: 0
+    t.boolean "banned", default: false
+    t.string "subdomain_name"
+    t.integer "relevance", default: 0
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.index ["latitude", "longitude"], name: "index_attractions_on_latitude_and_longitude"
+    t.index ["user_id"], name: "index_attractions_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.integer "parent_category_id"
     t.string "name"
@@ -55,15 +105,15 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "categories_offers", force: :cascade do |t|
-    t.integer "offer_id", null: false
-    t.integer "category_id", null: false
+    t.bigint "offer_id", null: false
+    t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_categories_offers_on_category_id"
     t.index ["offer_id"], name: "index_categories_offers_on_offer_id"
   end
 
   create_table "categories_products", force: :cascade do |t|
-    t.integer "product_id", null: false
-    t.integer "category_id", null: false
+    t.bigint "product_id", null: false
+    t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_categories_products_on_category_id"
     t.index ["product_id"], name: "index_categories_products_on_product_id"
   end
@@ -71,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   create_table "descriptions", force: :cascade do |t|
     t.text "text"
     t.string "describable_type", null: false
-    t.integer "describable_id", null: false
+    t.bigint "describable_id", null: false
     t.string "language"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -82,15 +132,15 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
     t.string "terms"
     t.integer "priority"
     t.date "expiry_date"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_inspectors_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "inspector_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "inspector_id", null: false
+    t.bigint "user_id", null: false
     t.integer "status"
     t.string "signature"
     t.string "source_name"
@@ -104,8 +154,8 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "offers", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "product_id"
+    t.bigint "user_id"
+    t.bigint "product_id"
     t.string "title"
     t.string "description"
     t.date "start_date"
@@ -124,7 +174,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
     t.string "brand"
     t.string "model"
     t.integer "stock"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.date "expiry_date"
     t.date "produced_date"
     t.datetime "created_at", precision: 6, null: false
@@ -142,7 +192,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer "accommodation_id", null: false
+    t.bigint "accommodation_id", null: false
     t.integer "room_number", default: 0
     t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
@@ -165,7 +215,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "taxis", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "title", null: false
     t.string "brand"
     t.string "model"
@@ -177,21 +227,23 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
     t.decimal "day_price_wo_driver", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.index ["latitude", "longitude"], name: "index_taxis_on_latitude_and_longitude"
     t.index ["user_id"], name: "index_taxis_on_user_id"
   end
 
   create_table "tour_days", force: :cascade do |t|
-    t.integer "tour_id", null: false
-    t.text "description"
+    t.bigint "tour_id", null: false
     t.integer "day_number"
-    t.string "day_title"
+    t.string "tittle"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tour_id"], name: "index_tour_days_on_tour_id"
   end
 
   create_table "tour_excludes", force: :cascade do |t|
-    t.integer "tour_id", null: false
+    t.bigint "tour_id", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -199,7 +251,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "tour_includes", force: :cascade do |t|
-    t.integer "tour_id", null: false
+    t.bigint "tour_id", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -207,7 +259,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "tour_plus", force: :cascade do |t|
-    t.integer "tour_id", null: false
+    t.bigint "tour_id", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -215,7 +267,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "tour_suplements", force: :cascade do |t|
-    t.integer "tour_id", null: false
+    t.bigint "tour_id", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -223,7 +275,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
   end
 
   create_table "tours", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "title"
     t.text "description"
     t.date "start_date"
@@ -235,11 +287,14 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
     t.integer "price_kids"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.index ["latitude", "longitude"], name: "index_tours_on_latitude_and_longitude"
     t.index ["user_id"], name: "index_tours_on_user_id"
   end
 
   create_table "transfers", force: :cascade do |t|
-    t.integer "taxi_id", null: false
+    t.bigint "taxi_id", null: false
     t.integer "from"
     t.integer "to"
     t.decimal "adult_price", precision: 10, scale: 2
@@ -260,6 +315,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_122453) do
 
   add_foreign_key "accommodations", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "attractions", "users"
   add_foreign_key "categories_offers", "categories"
   add_foreign_key "categories_offers", "offers"
   add_foreign_key "categories_products", "categories"

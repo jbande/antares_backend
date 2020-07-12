@@ -3,24 +3,29 @@ class ImagesController < ApplicationController
 
   include UsersHelper::Access
 
-  def new
+  def initialize
+    @models_dictionary = {
+        tour: Tour,
+        accommodation: Accommodation,
+        room: Room,
+        attraction: Attraction,
+        taxi: Taxi
+    }
+    super
+  end
 
+  def new
   end
 
 
   def create
-    dict = {
-        tour: Tour,
-        accommodation: Accommodation,
-        room: Room
-    }
 
     #current_user = get_current_user
     #return unless current_user
 
     model = nil
-    if dict.has_key? params[:entity_type].to_sym
-      model = dict[params[:entity_type].to_sym]
+    if @models_dictionary.has_key? params[:entity_type].to_sym
+      model = @models_dictionary[params[:entity_type].to_sym]
     end
 
     return unless model
@@ -36,17 +41,12 @@ class ImagesController < ApplicationController
   end
 
   def remove_image
-    dict = {
-        tour: Tour,
-        accommodation: Accommodation,
-        room: Room
-    }
 
     #current_user = get_current_user
     #return unless current_user
 
     model = nil
-    if dict.has_key? params[:entity_type].to_sym
+    if @models_dictionary.has_key? params[:entity_type].to_sym
       model = dict[params[:entity_type].to_sym]
     end
 
@@ -62,6 +62,5 @@ class ImagesController < ApplicationController
 
     render status: 200, json: {status:'ok'}
   end
-
 
 end

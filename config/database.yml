@@ -4,22 +4,40 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 #
+#default: &default
+#  adapter: sqlite3
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  timeout: 5000
+
+
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  username: <%= ENV.fetch("DEV_ANTARES_BACKEND_DB_USER")%>
+  password: <%= ENV.fetch("DEV_ANTARES_BACKEND_DB_PASSWORD")%>
+  host: <%= ENV.fetch("DEV_ANTARES_BACKEND_DB_HOST")%>
+  port: <%= ENV.fetch("DEV_ANTARES_BACKEND_DB_PORT")%>
+  #username: 'postgres'
+  #password: 'Mcdldbnmlvac.82092020'
+  #host: 'localhost'
+  #port: '5432'
+
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  #database: wercubadb_development
+  database: <%= ENV.fetch("DEV_ANTARES_BACKEND_DB_NAME")%>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: wercubadb_test
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: wercubadb_prod

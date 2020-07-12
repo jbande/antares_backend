@@ -1,25 +1,16 @@
-include ImageHelper
-class Tour < ApplicationRecord
+class Attraction < ApplicationRecord
+  belongs_to :user
+
   include Rails.application.routes.url_helpers
   include ModelsHelper
 
-  has_one_attached :portrait
-
   has_many_attached :images
-
   has_one_attached :main_image
 
+  acts_as_mappable :lat_column_name => :latitude,
+                   :lng_column_name => :longitude
+
   has_many :descriptions, as: :describable
-
-  belongs_to :user
-
-  has_many :tour_days
-  has_many :tour_includes
-  has_many :tour_excludes
-  has_many :tour_plus
-  has_many :tour_suplements
-
-
 
   def images_urls
     images = []
@@ -29,5 +20,6 @@ class Tour < ApplicationRecord
     end
     return images
   end
+
 
 end

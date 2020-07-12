@@ -1,22 +1,24 @@
 module Mutations
   class CreateTour < BaseMutation
+    include DescriptionHelper::CRUDS
+    include MutationsHelper::Common
 
     class TourInputData < Types::BaseInputObject
+      argument :model_data, Types::TourTypeInput, required: false
+
       argument :tour_includes, [Types::TourIncludesTypeInput], required: false
       argument :tour_excludes, [Types::TourExcludesTypeInput], required: false
       argument :tour_suplements, [Types::TourSuplementTypeInput], required: false
       argument :descriptions, [Types::DescriptionTypeInput], required: true
-
       argument :tour_days, [Types::TourDayTypeInput], required: false
       argument :tour_plus, [Types::TourPlusTypeInput], required: false
-      argument :tour_data, Types::TourTypeInput, required: false
     end
 
-    argument :tour, TourInputData, required: false
+    argument :input_data, TourInputData, required: false
     argument :on_behalf_of_user, Int, required:false
     type Types::TourType
 
-    def resolve(tour: nil, on_behalf_of_user: nil)
+    def resolve(input_data: nil, on_behalf_of_user: nil)
 
       if on_behalf_of_user
         current_user = User.find_by_id on_behalf_of_user
@@ -24,48 +26,21 @@ module Mutations
         current_user = context[:current_user]
       end
 
-      new_tour = Tour.new(tour&.[](:tour_data).to_h)
+      entity= new_entity(Tour, input_data)
+      add_descriptions(entity, input_data)
+      entity.save
 
-      if tour&.[](:descriptions)
-        tour&.[](:descriptions).each do |item|
-          new_tour.descriptions.append(Description.new(item.to_h))
-        end
-      end
+      insert_includes(input_data:input_data, entity:entity)
+      insert_excludes(input_data:input_data, entity:entity)
+      insert_suplemments(input_data:input_data, entity:entity)
+      insert_tour_days(input_data:input_data, entity:entity)
+      insert_tour_plus(input_data:input_data, entity:entity)
 
-      if tour&.[](:tour_includes)
-        tour&.[](:tour_includes).each do |item|
-          new_tour.tour_includes.append(TourInclude.new(item.to_h))
-        end
-      end
-
-      if tour&.[](:tour_excludes)
-        tour&.[](:tour_excludes).each do |item|
-          new_tour.tour_excludes.append(TourExclude.new(item.to_h))
-        end
-      end
-
-      if tour&.[](:tour_suplements)
-        tour&.[](:tour_suplements).each do |item|
-          new_tour.tour_suplements.append(TourSuplement.new(item.to_h))
-        end
-      end
-
-      if tour&.[](:tour_days)
-        tour&.[](:tour_days).each do |item|
-          new_tour.tour_days.append(TourDay.new(item.to_h))
-        end
-      end
-
-      if tour&.[](:tour_plus)
-        tour&.[](:tour_plus).each do |item|
-          new_tour.tour_plus.append(TourPlu.new(item.to_h))
-        end
-      end
-
-      current_user.tours.append(new_tour)
+      current_user.tours.append(entity)
       current_user.save
-      new_tour
+      entity
     end
+
   end
 
   class UpdateTourIncludes < BaseMutation
@@ -136,7 +111,7 @@ module Mutations
 
   class UpdateTourDays < BaseMutation
     class TourUpdateDaysData < Types::BaseInputObject
-      argument :data_list, [Types::TourDayTypeInput], required: true
+      argument :tour_days, [Types::TourDayTypeInput], required: true
       argument :id, Integer, required: true
     end
 
@@ -148,9 +123,8 @@ module Mutations
       upd_tour = current_user.tours.find_by_id tour.id
       upd_tour.tour_days.destroy_all
 
-      tour&.[](:data_list).each do |item|
-        upd_tour.tour_days.create(item.to_h)
-      end
+      insert_tour_days(input_data:input_data, entity:upd_tour)
+
       upd_tour.save
       upd_tour
     end
@@ -177,4 +151,6 @@ module Mutations
       upd_tour
     end
   end
+
+
 end

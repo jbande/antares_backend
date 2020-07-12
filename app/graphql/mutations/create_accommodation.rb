@@ -1,30 +1,26 @@
 module Mutations
   class CreateAccommodation < BaseMutation
+    include DescriptionHelper::CRUDS
+    include MutationsHelper::Common
 
     class AccommodationInputData < Types::BaseInputObject
+      argument :model_data, Types::AccommodationTypeInput, required: true
       argument :descriptions, [Types::DescriptionTypeInput], required: false
-      argument :accommodation_data, Types::AccommodationTypeInput, required: true
     end
 
-    argument :accommodation, AccommodationInputData, required: false
-
+    argument :input_data, AccommodationInputData, required: false
     type Types::AccommodationType
 
-    def resolve(accommodation: nil)
+    def resolve(input_data: nil)
       current_user = context[:current_user]
+      return unless current_user
 
-      new_accommodation = Accommodation.new(accommodation&.[](:accommodation_data).to_h)
+      entity = new_entity(Accommodation, input_data)
+      add_descriptions(entity, input_data)
 
-      if accommodation&.[](:descriptions)
-        accommodation&.[](:descriptions).each do |item|
-          new_accommodation.descriptions.append(Description.new(item.to_h))
-        end
-      end
-
-      current_user.accommodations.append(new_accommodation)
+      current_user.accommodations.append(entity)
       current_user.save
-      new_accommodation
-
+      entity
     end
   end
 

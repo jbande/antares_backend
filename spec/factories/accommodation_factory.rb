@@ -1,31 +1,4 @@
-
 FactoryBot.define do
-  factory :accommodation do
-    sequence(:name) {|n| "Casa (#{n})"}
-    price {45}
-    descriptions {description}
-  end
+  factory :accommodation, class: Accommodation
 end
 
-# mutation {
-#   createAccommodation(
-#     accommodation:{
-#       accommodationData:{
-#         name: "Casa Fernandez"
-#         price: 45
-#       }
-#       descriptions:[{
-#         text: "Mansion Fernandez"
-#         language:"es"
-#       },
-#       {
-#         text: "Fernandez residence"
-#         language: "en"
-#       }
-#       ]
-#     }
-#   ){
-#     id
-#     name
-#   }
-# }

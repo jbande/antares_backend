@@ -52,5 +52,8 @@ module Types
     field :create_taxi, mutation: Mutations::CreateTaxi
     field :update_taxi, mutation: Mutations::UpdateTaxi
 
+    field :create_attraction, mutation: Mutations::CreateAttraction
+    field :update_attraction, mutation: Mutations::UpdateAttraction
+
   end
 end
