@@ -8,7 +8,7 @@ module Types
     field :duration, Integer, null: true
     field :duration_unit, String, null: true
     field :status, Integer, null: true
-    field :prince_adults, Integer, null: true
+    field :price_adults, Integer, null: true
     field :price_kids, Integer, null: true
 
     field :descriptions, [Types::DescriptionType], null: true
@@ -20,7 +20,7 @@ module Types
     field :tour_days, [Types::TourDayType], null: true
 
     field :images, [ImageType], null: true, method: :images_urls
-
+    field :days_count, Integer, null: true, method: :days_count
     field :user, Types::UserType, null: true
   end
 end

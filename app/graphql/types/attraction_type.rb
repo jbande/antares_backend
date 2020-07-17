@@ -20,6 +20,8 @@ module Types
     #field :main_image, [Type::ImageType], null: true, method: :main_image_urls
     field :user, Types::UserType, null: true
 
+    field :region, Types::RegionType, null: true
+
   end
 end
 

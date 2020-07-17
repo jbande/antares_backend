@@ -6,12 +6,15 @@ module Types
     # TODO: remove me
     field :all_users, [UserType], null: false
     #field :all_products, [ProductType], null: false
+
     field :all_products, [ProductType], resolver: Resolvers::ProductSearch
     field :all_offers, [OfferType], resolver: Resolvers::OfferSearch
     field :my_inspectors, [InspectorType], resolver: Resolvers::InspectorSearch
     field :my_notifications, [NotificationType], resolver: Resolvers::NotificationSearch
 
-    field :all_tours, [TourType], null: false
+    field :all_tours, [TourType], resolver: Resolvers::TourSearch
+    field :all_attractions, [AttractionType], resolver: Resolvers::AttractionSearch
+
     field :all_static_texts, [StaticTextType], null: false
 
     field :all_static_images, [StaticImageType], null: false
@@ -22,10 +25,6 @@ module Types
 
     def all_users
       User.all
-    end
-
-    def all_tours
-      Tour.all
     end
 
     def all_static_texts

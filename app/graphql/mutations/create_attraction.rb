@@ -7,6 +7,7 @@ module Mutations
     class AttractionInputData < Types::BaseInputObject
       argument :model_data, Types::AttractionTypeInput, required: true
       argument :descriptions, [Types::DescriptionTypeInput], required: true
+      argument :region_id, Int, required: true
     end
 
     argument :input_data, AttractionInputData, required: false
@@ -17,6 +18,10 @@ module Mutations
       return unless current_user
       entity = new_entity(Attraction, input_data)
       add_descriptions(entity, input_data)
+
+      re = Region.find_by id: input_data.region_id
+      return unless re
+      entity.region = re
 
       current_user.attractions.append(entity)
       current_user.save

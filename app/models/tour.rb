@@ -30,4 +30,8 @@ class Tour < ApplicationRecord
     return images
   end
 
+  def days_count
+    self.tour_days.count()
+  end
+
 end

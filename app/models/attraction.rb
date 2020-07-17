@@ -1,5 +1,6 @@
 class Attraction < ApplicationRecord
   belongs_to :user
+  belongs_to :region
 
   include Rails.application.routes.url_helpers
   include ModelsHelper
@@ -11,6 +12,7 @@ class Attraction < ApplicationRecord
                    :lng_column_name => :longitude
 
   has_many :descriptions, as: :describable
+
 
   def images_urls
     images = []

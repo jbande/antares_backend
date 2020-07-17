@@ -4,6 +4,8 @@ class Accommodation < ApplicationRecord
   include ModelsHelper
 
   belongs_to :user
+  belongs_to :region
+
   has_many :descriptions, as: :describable
   has_many :rooms
   has_many_attached :images
