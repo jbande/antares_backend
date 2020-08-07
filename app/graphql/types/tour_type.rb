@@ -19,8 +19,14 @@ module Types
     field :tour_plus, [Types::TourPlusType], null: true
     field :tour_days, [Types::TourDayType], null: true
 
+    field :min_participant, Integer, null: false
+    field :max_participant, Integer, null: true
+
     field :images, [ImageType], null: true, method: :images_urls
     field :days_count, Integer, null: true, method: :days_count
     field :user, Types::UserType, null: true
+
+    field :topics, [String], null: true
+
   end
 end

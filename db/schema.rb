@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_034156) do
+ActiveRecord::Schema.define(version: 2020_08_04_164652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.datetime "updatedAt", null: false
   end
 
+  create_table "accom_extras", force: :cascade do |t|
+    t.string "label"
+    t.string "icon_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "accommodations", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
@@ -56,6 +63,20 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.index ["latitude", "longitude"], name: "index_accommodations_on_latitude_and_longitude"
     t.index ["region_id"], name: "index_accommodations_on_region_id"
     t.index ["user_id"], name: "index_accommodations_on_user_id"
+  end
+
+  create_table "accommodations_accom_extras", force: :cascade do |t|
+    t.bigint "accommodation_id", null: false
+    t.bigint "accom_extra_id", null: false
+    t.index ["accom_extra_id"], name: "index_accommodations_accom_extras_on_accom_extra_id"
+    t.index ["accommodation_id"], name: "index_accommodations_accom_extras_on_accommodation_id"
+  end
+
+  create_table "accommodations_amenities", force: :cascade do |t|
+    t.bigint "accommodation_id", null: false
+    t.bigint "amenity_id", null: false
+    t.index ["accommodation_id"], name: "index_accommodations_amenities_on_accommodation_id"
+    t.index ["amenity_id"], name: "index_accommodations_amenities_on_amenity_id"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -77,6 +98,14 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "amenities", force: :cascade do |t|
+    t.string "label"
+    t.string "icon_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label"], name: "index_amenities_on_label", unique: true
   end
 
   create_table "attractions", force: :cascade do |t|
@@ -195,6 +224,13 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "room_amenities", force: :cascade do |t|
+    t.string "label"
+    t.string "icon_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.bigint "accommodation_id", null: false
     t.integer "room_number", default: 0
@@ -202,6 +238,13 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["accommodation_id"], name: "index_rooms_on_accommodation_id"
+  end
+
+  create_table "rooms_room_amenities", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "room_amenity_id", null: false
+    t.index ["room_amenity_id"], name: "index_rooms_room_amenities_on_room_amenity_id"
+    t.index ["room_id"], name: "index_rooms_room_amenities_on_room_id"
   end
 
   create_table "static_images", force: :cascade do |t|
@@ -293,6 +336,9 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
+    t.integer "min_participant", default: 1
+    t.integer "max_participant"
+    t.string "topics", array: true
     t.index ["latitude", "longitude"], name: "index_tours_on_latitude_and_longitude"
     t.index ["user_id"], name: "index_tours_on_user_id"
   end
@@ -315,10 +361,16 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
+    t.string "uid"
+    t.index ["uid"], name: "index_users_on_uid"
   end
 
   add_foreign_key "accommodations", "regions"
   add_foreign_key "accommodations", "users"
+  add_foreign_key "accommodations_accom_extras", "accom_extras"
+  add_foreign_key "accommodations_accom_extras", "accommodations"
+  add_foreign_key "accommodations_amenities", "accommodations"
+  add_foreign_key "accommodations_amenities", "amenities"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "attractions", "regions"
   add_foreign_key "attractions", "users"
@@ -332,6 +384,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_034156) do
   add_foreign_key "offers", "products"
   add_foreign_key "offers", "users"
   add_foreign_key "rooms", "accommodations"
+  add_foreign_key "rooms_room_amenities", "room_amenities"
+  add_foreign_key "rooms_room_amenities", "rooms"
   add_foreign_key "taxis", "users"
   add_foreign_key "tour_days", "tours"
   add_foreign_key "tour_excludes", "tours"

@@ -11,5 +11,8 @@ module Types
     #field :main_image, [Type::ImageType], null: true, method: :main_image_urls
     field :user, Types::UserType, null: true
     field :rooms, [Types::RoomType], null: true
+    field :region, Types::RegionType, null: true
+    field :amenities, [Types::AmenityType], null: true
+    field :accom_extras, [Types::AccomExtraType], null: true
   end
 end

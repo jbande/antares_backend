@@ -9,7 +9,9 @@ class ImagesController < ApplicationController
         accommodation: Accommodation,
         room: Room,
         attraction: Attraction,
-        taxi: Taxi
+        taxi: Taxi,
+        user: User,
+        tour_day: TourDay
     }
     super
   end
@@ -29,11 +31,16 @@ class ImagesController < ApplicationController
     end
 
     return unless model
-
     model_instance = model.find_by_id params[:entity_id]
 
-    if model_instance #and model_instance.user == current_user
-      model_instance.images.attach(params[:images])
+    if model_instance  #and model_instance.user == current_user
+      if model_instance.instance_of? User
+        model_instance.avatar.attach(params[:images][0])
+      elsif model_instance.instance_of? TourDay
+        model_instance.portrait.attach(params[:images][0])
+      else
+        model_instance.images.attach(params[:images])
+      end
     end
 
     render status: 200, json: {status:'ok'}

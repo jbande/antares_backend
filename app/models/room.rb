@@ -7,6 +7,7 @@ class Room < ApplicationRecord
 
   belongs_to :accommodation
   has_many :descriptions, as: :describable
+  has_and_belongs_to_many :room_amenities, join_table: :rooms_room_amenities
   has_many_attached :images
 
   def images_urls

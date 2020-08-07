@@ -12,5 +12,7 @@ module Types
     field :day_price_wo_driver, Float, null: true
     field :transfers, [Types::TransferType], null: false
     field :descriptions, [Types::DescriptionType], null: false
+    field :images, [ImageType], null: true, method: :images_urls
+
   end
 end

@@ -4,7 +4,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     # TODO: remove me
-    field :all_users, [UserType], null: false
+    field :all_users, [UserType], resolver: Resolvers::UserSearch
     #field :all_products, [ProductType], null: false
 
     field :all_products, [ProductType], resolver: Resolvers::ProductSearch
@@ -20,12 +20,14 @@ module Types
     field :all_static_images, [StaticImageType], null: false
     field :all_categories, [CategoryType], null: false
 
-    field :all_accommodations, [AccommodationType], null: false
+    field :all_accommodations, [AccommodationType], resolver: Resolvers::AccommodationSearch
     field :all_regions, [RegionType], null: false
 
-    def all_users
-      User.all
-    end
+    field :all_taxis, [TaxiType], resolver: Resolvers::TaxiSearch
+
+    #def all_users
+    #  User.all
+    #end
 
     def all_static_texts
       StaticText.all
@@ -39,10 +41,10 @@ module Types
       Category.all
     end
 
-    def all_accommodations
-      #Accommodation.includes(:rooms).all
-      Accommodation.includes(:rooms).all.references(:rooms)
-    end
+    # def all_accommodations
+    #   #Accommodation.includes(:rooms).all
+    #   Accommodation.includes(:rooms).all.references(:rooms)
+    # end
 
     def all_regions
       Region.all

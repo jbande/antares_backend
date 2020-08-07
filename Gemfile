@@ -60,3 +60,4 @@ gem 'pg'
 
 gem 'factory_bot_rails'
 
+gem 'firebase'

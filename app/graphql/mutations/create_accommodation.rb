@@ -6,6 +6,8 @@ module Mutations
     class AccommodationInputData < Types::BaseInputObject
       argument :model_data, Types::AccommodationTypeInput, required: true
       argument :descriptions, [Types::DescriptionTypeInput], required: false
+      argument :region_id, Int, required: true
+      argument :amenities, [Int], required: false
     end
 
     argument :input_data, AccommodationInputData, required: false
@@ -17,6 +19,19 @@ module Mutations
 
       entity = new_entity(Accommodation, input_data)
       add_descriptions(entity, input_data)
+
+      re = Region.find_by id: input_data.region_id
+      return unless re
+      entity.region = re
+
+      if input_data&.[](:amenities)
+        input_data&.[](:amenities).each do |item|
+          am = Amenity.find_by id: item
+          if am
+            entity.amenities.append(am)
+          end
+        end
+      end
 
       current_user.accommodations.append(entity)
       current_user.save

@@ -1,18 +1,18 @@
 require 'search_object'
 require 'search_object/plugin/graphql'
 
-class Resolvers::TourSearch < ApplicationController
+class Resolvers::AccommodationSearch < ApplicationController
   # include SearchObject for GraphQL
   include SearchObject.module(:graphql)
   include Rails.application.routes.url_helpers
 
   # scope is starting point for search
-  scope { Tour.all }
+  scope { Accommodation.all }
 
-  type types[Types::TourType]
+  type types[Types::AccommodationType]
 
   # inline input type definition for the advanced filter
-  class TourFilter < ::Types::BaseInputObject
+  class AccommodationFilter < ::Types::BaseInputObject
     argument :OR, [self], required: false
     argument :id, Int, required: false
     argument :page, Int, required: false
@@ -20,7 +20,7 @@ class Resolvers::TourSearch < ApplicationController
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
-  option :filter, type: TourFilter, with: :apply_filter
+  option :filter, type: AccommodationFilter, with: :apply_filter
 
   # apply_filter recursively loops through "OR" branches
   def apply_filter(scope, value)
@@ -29,7 +29,6 @@ class Resolvers::TourSearch < ApplicationController
   end
 
   def normalize_filters(value, branches = [])
-
 
     if value[:page_size] and value[:page_size] > 20
       limit = 20
@@ -44,10 +43,12 @@ class Resolvers::TourSearch < ApplicationController
     end
 
     if value[:id]
-      scope = Tour.where id: value[:id]
+      scope = Accommodation.includes(:rooms).includes(:amenities).includes(:accom_extras).all.references(:rooms).where(id: value[:id])
     else
-      scope = Tour.limit(limit).offset(offset)
+      scope = Accommodation.includes(:rooms).all.references(:rooms)
+      scope = scope.limit(limit).offset(offset)
     end
+
 
 
     #scope = scope.where('name LIKE ?', "%#{value[:name_contains]}%") if value[:name_contains]

@@ -6,5 +6,6 @@ module Types
     field :descriptions, [Types::DescriptionType], null: true
     field :images, [Types::ImageType], null: true, method: :images_urls
     field :accommodation, Types::AccommodationType, null: true
+    field :room_amenities, [Types::RoomAmenityType], null: true
   end
 end

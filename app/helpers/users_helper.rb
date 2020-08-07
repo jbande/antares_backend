@@ -1,10 +1,16 @@
 module UsersHelper
   module Access
     def get_current_user
-      cur_user = current_user
+      cur_user = fire_base_user
+
+      unless cur_user
+        cur_user = current_user
+      end
+
       unless cur_user
         cur_user = api_current_user
       end
+
       cur_user
     end
 
@@ -32,6 +38,21 @@ module UsersHelper
 
       user_id = token.gsub('user-id:', '').to_i
       User.find user_id
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      nil
+    end
+
+    def fire_base_user
+      return unless request.headers.key? 'idToken'
+      return if request.headers['idToken'].blank?
+      return if request.headers['idToken'] == 'null'
+
+      firebase = FirebaseHelper::FirebaseClient.new
+      token = request.headers['idToken']
+      firebase_user_json = firebase.getAccountInfo(token)
+
+      User.find_by_uid firebase_user_json['localId']
+
     rescue ActiveSupport::MessageVerifier::InvalidSignature
       nil
     end
