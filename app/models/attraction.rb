@@ -12,6 +12,8 @@ class Attraction < ApplicationRecord
                    :lng_column_name => :longitude
 
   has_many :descriptions, as: :describable
+  has_and_belongs_to_many :attract_types, join_table: :attractions_attract_types
+  has_and_belongs_to_many :attract_activities, join_table: :attractions_attract_activities
 
 
   def images_urls

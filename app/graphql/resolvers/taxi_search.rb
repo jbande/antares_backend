@@ -16,6 +16,7 @@ class Resolvers::TaxiSearch < ApplicationController
     argument :OR, [self], required: false
     argument :page, Int, required: false
     argument :page_size, Int, required: false
+    argument :id, Int, required: false
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
@@ -42,7 +43,13 @@ class Resolvers::TaxiSearch < ApplicationController
       offset = 0
     end
 
-    scope = Taxi.limit(limit).offset(offset)
+    if value[:id]
+      scope = Taxi.where(id: value[:id])
+    else
+      scope = Taxi.limit(limit).offset(offset)
+    end
+
+
 
     #scope = scope.where('name LIKE ?', "%#{value[:name_contains]}%") if value[:name_contains]
     #scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%") if value[:description_contains]

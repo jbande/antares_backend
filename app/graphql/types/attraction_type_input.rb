@@ -13,6 +13,6 @@ module Types
 
     argument :latitude, Float, required: false
     argument :longitude, Float, required: false
-
+    argument :address, String, required: false
   end
 end

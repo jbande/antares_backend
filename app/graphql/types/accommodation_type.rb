@@ -14,5 +14,8 @@ module Types
     field :region, Types::RegionType, null: true
     field :amenities, [Types::AmenityType], null: true
     field :accom_extras, [Types::AccomExtraType], null: true
+    field :latitude, Float, null: true
+    field :longitude, Float, null: true
+    field :address, String, null: true
   end
 end

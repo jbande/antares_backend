@@ -14,6 +14,7 @@ class Resolvers::AttractionSearch < ApplicationController
   # inline input type definition for the advanced filter
   class AttractionFilter < ::Types::BaseInputObject
     argument :OR, [self], required: false
+    argument :id, Int, required: false
     argument :page, Int, required: false
     argument :page_size, Int, required: false
   end
@@ -42,7 +43,12 @@ class Resolvers::AttractionSearch < ApplicationController
       offset = 0
     end
 
-    scope = Attraction.limit(limit).offset(offset)
+    if value[:id]
+      scope = Attraction.where(id: value[:id])
+    else
+      scope = Attraction.limit(limit).offset(offset)
+    end
+
 
     #scope = scope.where('name LIKE ?', "%#{value[:name_contains]}%") if value[:name_contains]
     #scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%") if value[:description_contains]

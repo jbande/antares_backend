@@ -9,6 +9,8 @@ class Taxi < ApplicationRecord
   has_many_attached :images
   has_one_attached :main_image
 
+  has_and_belongs_to_many :taxi_amenities, join_table: :taxis_taxi_amenities
+
   def images_urls
     images = []
     self.images.each do |img|

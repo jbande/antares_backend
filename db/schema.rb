@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_164652) do
+ActiveRecord::Schema.define(version: 2020_08_13_190023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
     t.bigint "region_id"
+    t.string "address"
     t.index ["latitude", "longitude"], name: "index_accommodations_on_latitude_and_longitude"
     t.index ["region_id"], name: "index_accommodations_on_region_id"
     t.index ["user_id"], name: "index_accommodations_on_user_id"
@@ -108,6 +109,20 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
     t.index ["label"], name: "index_amenities_on_label", unique: true
   end
 
+  create_table "attract_activities", force: :cascade do |t|
+    t.string "label"
+    t.string "icon_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "attract_types", force: :cascade do |t|
+    t.string "label"
+    t.string "icon_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "attractions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
@@ -124,9 +139,24 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
     t.decimal "latitude", precision: 10, scale: 6
     t.decimal "longitude", precision: 10, scale: 6
     t.bigint "region_id"
+    t.string "address"
     t.index ["latitude", "longitude"], name: "index_attractions_on_latitude_and_longitude"
     t.index ["region_id"], name: "index_attractions_on_region_id"
     t.index ["user_id"], name: "index_attractions_on_user_id"
+  end
+
+  create_table "attractions_attract_activities", force: :cascade do |t|
+    t.bigint "attraction_id", null: false
+    t.bigint "attract_activity_id", null: false
+    t.index ["attract_activity_id"], name: "index_attractions_attract_activities_on_attract_activity_id"
+    t.index ["attraction_id"], name: "index_attractions_attract_activities_on_attraction_id"
+  end
+
+  create_table "attractions_attract_types", force: :cascade do |t|
+    t.bigint "attraction_id", null: false
+    t.bigint "attract_type_id", null: false
+    t.index ["attract_type_id"], name: "index_attractions_attract_types_on_attract_type_id"
+    t.index ["attraction_id"], name: "index_attractions_attract_types_on_attraction_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -261,6 +291,13 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "taxi_amenities", force: :cascade do |t|
+    t.string "label"
+    t.string "icon_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "taxis", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", null: false
@@ -278,6 +315,13 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
     t.decimal "longitude", precision: 10, scale: 6
     t.index ["latitude", "longitude"], name: "index_taxis_on_latitude_and_longitude"
     t.index ["user_id"], name: "index_taxis_on_user_id"
+  end
+
+  create_table "taxis_taxi_amenities", force: :cascade do |t|
+    t.bigint "taxi_id", null: false
+    t.bigint "taxi_amenity_id", null: false
+    t.index ["taxi_amenity_id"], name: "index_taxis_taxi_amenities_on_taxi_amenity_id"
+    t.index ["taxi_id"], name: "index_taxis_taxi_amenities_on_taxi_id"
   end
 
   create_table "tour_days", force: :cascade do |t|
@@ -374,6 +418,10 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "attractions", "regions"
   add_foreign_key "attractions", "users"
+  add_foreign_key "attractions_attract_activities", "attract_activities"
+  add_foreign_key "attractions_attract_activities", "attractions"
+  add_foreign_key "attractions_attract_types", "attract_types"
+  add_foreign_key "attractions_attract_types", "attractions"
   add_foreign_key "categories_offers", "categories"
   add_foreign_key "categories_offers", "offers"
   add_foreign_key "categories_products", "categories"
@@ -387,6 +435,8 @@ ActiveRecord::Schema.define(version: 2020_08_04_164652) do
   add_foreign_key "rooms_room_amenities", "room_amenities"
   add_foreign_key "rooms_room_amenities", "rooms"
   add_foreign_key "taxis", "users"
+  add_foreign_key "taxis_taxi_amenities", "taxi_amenities"
+  add_foreign_key "taxis_taxi_amenities", "taxis"
   add_foreign_key "tour_days", "tours"
   add_foreign_key "tour_excludes", "tours"
   add_foreign_key "tour_includes", "tours"

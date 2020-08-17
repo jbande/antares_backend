@@ -21,7 +21,12 @@ module Types
     field :user, Types::UserType, null: true
 
     field :region, Types::RegionType, null: true
+    field :latitude, Float, null: true
+    field :longitude, Float, null: true
+    field :address, String, null: true
 
+    field :attract_types, [Types::AttractTypeType], null: true
+    field :attract_activities, [Types::AttractActivityType], null: true
   end
 end
 
