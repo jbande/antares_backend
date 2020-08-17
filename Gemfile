@@ -22,6 +22,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 3.8'
+  gem 'json-schema'
 end
 
 group :development do
@@ -41,3 +43,21 @@ gem 'graphql', '1.9.17'
 gem 'graphiql-rails', '1.7.0', group: :development
 
 gem 'search_object_graphql', '0.3.1'
+
+gem 'rack-cors'
+
+gem 'image_processing', '~> 1.2'
+
+gem 'kashmir'
+
+gem 'jquery-rails'
+
+#gem 'bootstrap', '~> 4.0.0'
+
+gem 'geokit-rails'
+
+gem 'pg'
+
+gem 'factory_bot_rails'
+
+gem 'firebase'

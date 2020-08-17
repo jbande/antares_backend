@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "required": ["data"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["createTour"],
+      "properties": {
+        "createTour": {
+          "type": "object",
+          "required": ["id", "description",
+            "duration", "priceKids",
+            "descriptions", "tourDays",
+            "tourIncludes", "tourExcludes",
+            "tourSuplements", "tourPlus"
+          ],
+
+
+
+
+
+          "properties": {
+
+            "id": {"type": "string"},
+            "description": {"type":"string"},
+            "duration": {"type":"integer"},
+            "priceKids": {"type": "integer"},
+
+            "descriptions": {
+              "type": "array",
+              "contains": {
+                "type":"object",
+                "required": ["text", "language"],
+                "properties": {
+                  "text": {"type": "string"},
+                  "language": {"type": "string"}
+                }
+              }
+            },
+
+            "tourDays": {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["dayTittle", "dayNumber"],
+                "properties": {
+                  "dayTittle": {"type": "string"},
+                  "dayNumber": {"type": "string"}
+                }
+              }
+            },
+
+            "tourIncludes": {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["description"],
+                "properties": {
+                  "description": {"type": "string"}
+                }
+              }
+            },
+
+            "tourExcludes": {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["description"],
+                "properties": {
+                  "description": {"type": "string"}
+                }
+              }
+            },
+
+            "tourSuplements": {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["description"],
+                "properties": {
+                  "description": {"type": "string"}
+                }
+              }
+            },
+
+            "tourPlus": {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["description"],
+                "properties": {
+                  "description": {"type": "string"}
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

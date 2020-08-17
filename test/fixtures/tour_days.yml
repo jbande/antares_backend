@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tour: one
+  description: MyText
+  day_number: 1
+  day_title: MyString
+
+two:
+  tour: two
+  description: MyText
+  day_number: 1
+  day_title: MyString

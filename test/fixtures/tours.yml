@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  title: MyString
+  description: MyText
+  start_date: 2020-05-06
+  end_date: 2020-05-06
+  duration: 1
+  duration_unit: MyString
+  status: 1
+  price_adults: 1
+  price_kids: 1
+
+two:
+  user: two
+  title: MyString
+  description: MyText
+  start_date: 2020-05-06
+  end_date: 2020-05-06
+  duration: 1
+  duration_unit: MyString
+  status: 1
+  price_adults: 1
+  price_kids: 1

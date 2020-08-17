@@ -1,0 +1,47 @@
+<div class="row" id="static_texts">
+  <div class="col-lg-12">
+    <h4>Static Texts</h4>
+  </div>
+  <div class="col-lg-12">
+    <table style="width:100%" class="table-striped">
+      <tr>
+        <th>id</th>
+        <th>Text</th>
+        <th>Language</th>
+        <th>pagePosition</th>
+        <th></th>
+      </tr>
+      <tr v-for="static_text in static_texts">
+        <td>{{ static_text.id }}</td>
+        <td>
+          <div v-if="static_text.editing"><input v-model="static_text.text" ></div>
+          <div v-else="static_text.editing">{{ static_text.text }}</div>
+        </td>
+        <td>
+          <div v-if="static_text.editing"><input v-model="static_text.language"></div>
+          <div v-else="static_text.editing">{{ static_text.language }}</div></td>
+        <td>
+          <div v-if="static_text.editing"><input v-model="static_text.pagePosition"></div>
+          <div v-else="static_text.editing">{{ static_text.pagePosition }}</div>
+        </td>
+        <td>
+          <button v-if="static_text.editing" v-on:click="updateStaticText(static_text)">save</button>
+          <button v-else="static_text.editing" v-on:click="activateEdition(static_text)">Edit</button>
+        </td>
+      </tr>
+      <tr>
+        <td>New</td>
+        <td><div><input v-model="new_static_text.text" ></div></td>
+        <td><div><input v-model="new_static_text.language" ></div></td>
+        <td><div><input v-model="new_static_text.pagePosition" ></div></td>
+        <td><button v-on:click="saveStaticText(new_static_text)">New</button></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+
+<p id="notice"><%= notice %></p>
+
+<%= javascript_include_tag "static_texts_app.js" %>

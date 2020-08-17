@@ -24,6 +24,9 @@ class Resolvers::OfferSearch
     argument :product_brand_contains, String, required: false
     argument :product_model_contains, String, required: false
     argument :product_maker_contains, String, required: false
+    argument :categories, [Int], required: false
+    argument :top_price, Int, required: false
+    argument :bottom_price, Int, required: false
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
@@ -36,7 +39,15 @@ class Resolvers::OfferSearch
   end
 
   def normalize_filters(value, branches = [])
-    scope = Offer.all
+    if value[:categories]
+      scope = Offer.includes(:categories).where('categories.id in (?)', value[:categories]).references(:categories)
+    else
+      scope = Offer.all
+    end
+
+    scope = scope.where('price < ?', value[:top_price]) if value[:top_price]
+    scope = scope.where('price > ?', value[:top_price]) if value[:bottom_price]
+
     scope = scope.where('title LIKE ?', "%#{value[:title_contains]}%") if value[:title_contains]
     scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%") if value[:description_contains]
 

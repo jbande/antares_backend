@@ -1,0 +1,29 @@
+<div class="row">
+
+  <div class="col-lg-12">
+    <h4>Product</h4>
+    <ul>
+      <li><%= @product.id %></li>
+      <li><%= @product.name %></li>
+    </ul>
+  </div>
+
+  <div class="col-lg-12">
+    <h4>Images</h4>
+    <ul>
+      <%@product.images.each do |img| %>
+          <li>
+            <%= image_tag url_for(img) %>
+          </li>
+          <li>
+            <%= image_tag img.variant(resize: "100x100") %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
+
+
+
+

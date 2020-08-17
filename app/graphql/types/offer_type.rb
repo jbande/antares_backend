@@ -7,5 +7,6 @@ module Types
     field :end_date, String, null: true
     field :product, ProductType, null: false
     field :user, UserType, null: false
+    field :price, Float, null: false
   end
 end

@@ -1,0 +1,96 @@
+<div class="row" id="static_images">
+  <div class="col-lg-12">
+    <h4>Static Texts</h4>
+  </div>
+  <div class="col-lg-12">
+    <table style="width:100%" class="table-striped">
+      <tr>
+        <th>id</th>
+        <th>pagePosition</th>
+        <th>preview</th>
+        <th></th>
+      </tr>
+      <tr v-for="static_image in static_images">
+        <td>{{ static_image.id }}</td>
+        <td>
+          <div v-if="static_image.editing"><input v-model="static_image.pagePosition"></div>
+          <div v-else="static_image.editing">{{ static_image.pagePosition }}</div>
+        </td>
+        <td>
+          <div>
+            <img v-if="static_image.images[0]" v-bind:src="static_image.images[0].v100100" alt="">
+          </div>
+        </td>
+        <td>
+          <!--<button v-if="static_image.editing" v-on:click="updateStaticText(static_text)">save</button>-->
+          <button v-on:click="activateEdition(static_image)">Edit</button>
+        </td>
+      </tr>
+      <!--<tr>-->
+        <!--<td>New</td>-->
+        <!--<td><div><input v-model="new_static_text.text" ></div></td>-->
+        <!--<td><div><input v-model="new_static_text.language" ></div></td>-->
+        <!--<td><div><input v-model="new_static_text.pagePosition" ></div></td>-->
+        <!--<td><button v-on:click="saveStaticText(new_static_text)">New</button></td>-->
+      <!--</tr>-->
+    </table>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="updateImageModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+
+          <form enctype="multipart/form-data" action="/static_image" accept-charset="UTF-8" id="updateImageForm"
+                method="post" @submit="closeModal">
+            <input type="hidden" name="_method" value="patch">
+
+            <input placeholder="page position" v-model="on_edit_static_image.pagePosition"
+                   type="text" name="static_image[page_position]"
+                   id="static_image_page_position"><br>
+
+            <input multiple="multiple" type="file" name="static_image[images][]" id="static_image_images"><br>
+
+            <input type="text" v-model="on_edit_static_image.id" name="static_image[id]" id="static_image_id" >
+
+            <!--<input type="submit" name="commit" value="Update Static image" data-disable-with="Update Static image">-->
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" form="updateImageForm">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="col-lg-12">
+      <hr>
+      <h4>New Static Image</h4>
+      <form enctype="multipart/form-data" action="/static_image/create" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="ByFbVxLuDY3Ik7S+gVMUFQfIO/CiNV92yIvIJewMqUZ2s5pcQ2TjwNCK21U8sq+zCVUMlQznN5WZd61uyzJlgA==">
+        <label for="static_image_page_position">Page Position</label>
+        <input placeholder="page position" type="text" name="static_image[page_position]" id="static_image_page_position"><br>
+
+        <label for="static_image_images">Select Image</label>
+        <input multiple="multiple" type="file" name="static_image[images][]" id="static_image_images"><br>
+        <input type="submit" name="commit" value="Create Static image" data-disable-with="Create Static image">
+      </form>
+    </div>
+
+
+</div>
+
+
+
+<p id="notice"><%= notice %></p>
+
+<%= javascript_include_tag "static_images_app.js" %>

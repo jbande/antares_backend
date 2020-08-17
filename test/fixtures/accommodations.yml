@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  references: 
+  name: MyString
+  status: 1
+  relevance: 1
+  banned: false
+
+two:
+  references: 
+  name: MyString
+  status: 1
+  relevance: 1
+  banned: false

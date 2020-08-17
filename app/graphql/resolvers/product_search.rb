@@ -1,9 +1,10 @@
 require 'search_object'
 require 'search_object/plugin/graphql'
 
-class Resolvers::ProductSearch
+class Resolvers::ProductSearch < ApplicationController
   # include SearchObject for GraphQL
   include SearchObject.module(:graphql)
+  include Rails.application.routes.url_helpers
 
   # scope is starting point for search
   scope { Product.all }
@@ -17,6 +18,7 @@ class Resolvers::ProductSearch
     argument :description_contains, String, required: false
     argument :model_contains, String, required: false
     argument :brand_contains, String, required: false
+    argument :categories, [Int], required: false
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
@@ -29,7 +31,12 @@ class Resolvers::ProductSearch
   end
 
   def normalize_filters(value, branches = [])
-    scope = Product.all
+
+    if value[:categories]
+      scope = Product.includes(:categories).where('categories.id in (?)', value[:categories]).references(:categories)
+    else
+      scope = Product.all
+    end
     scope = scope.where('name LIKE ?', "%#{value[:name_contains]}%") if value[:name_contains]
     scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%") if value[:description_contains]
     scope = scope.where('model LIKE ?', "%#{value[:model_contains]}%") if value[:model_contains]
