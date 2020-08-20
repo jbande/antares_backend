@@ -4,6 +4,7 @@ module Types
     field :first_name, String, null: false
     field :last_name, String, null: true
     field :email, String, null: false
+    field :preferred_language, String, null: true
 
     #field :static_image, [Types::ProductType], null: false
 

@@ -26,6 +26,8 @@ module Mutations
         current_user = context[:current_user]
       end
 
+      return unless current_user
+
       entity= new_entity(Tour, input_data)
       add_descriptions(entity, input_data)
       entity.save

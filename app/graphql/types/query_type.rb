@@ -25,6 +25,8 @@ module Types
 
     field :all_taxis, [TaxiType], resolver: Resolvers::TaxiSearch
 
+    field :logged_user, UserType, null: true
+
     #def all_users
     #  User.all
     #end
@@ -48,6 +50,10 @@ module Types
 
     def all_regions
       Region.all
+    end
+
+    def logged_user
+      context[:current_user]
     end
 
     #def all_offers
