@@ -10,6 +10,12 @@ module Types
     argument :price_kids, Integer, required: false
     argument :min_participant, Integer, required: true
     argument :max_participant, Integer, required: false
+
+    argument :hours_tour, Boolean, required: true
+    argument :paid_tour, Boolean, required: true
+    argument :currency, String, required: true
+    argument :hours_range, String, required: true
+
     argument :topics, [String], required: false
   end
 end

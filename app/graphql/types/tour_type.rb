@@ -10,6 +10,10 @@ module Types
     field :status, Integer, null: true
     field :price_adults, Integer, null: true
     field :price_kids, Integer, null: true
+    field :hours_tour, Boolean, null: false
+    field :paid_tour, Boolean, null: false
+    field :currency, String, null: true
+    field :hours_range, String, null: true
 
     field :descriptions, [Types::DescriptionType], null: true
 

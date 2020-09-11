@@ -44,4 +44,8 @@ Rails.application.routes.draw do
   get '/new/image', to:'images#new', as: 'new_image'
   post '/create/image', to:'images#create', as: 'create_image'
 
+  post '/user/avatar', to:'images#add_avatar', as:'add_avatar'
+
+  post '/tour/add/day/image', to:'images#add_tour_day_image', as:'add_tour_day_image'
+
 end

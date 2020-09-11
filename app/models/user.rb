@@ -4,7 +4,7 @@ class User < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   has_secure_password
-  validates :first_name, presence: true
+  #validates :first_name, presence: true
   validates :email, presence: true, uniqueness: true
 
   has_many :products

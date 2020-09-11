@@ -19,7 +19,6 @@ module Mutations
     type Types::TourType
 
     def resolve(input_data: nil, on_behalf_of_user: nil)
-
       if on_behalf_of_user
         current_user = User.find_by_id on_behalf_of_user
       else

@@ -76,7 +76,7 @@ module ImageHelper
 
 
       card_v_combined_options = { resize_to_fit: [4000, 420], gravity: 'center', strip: true}
-      if img.blob.metadata[:width] > 300
+      if img.blob.metadata.has_key? :width and img.blob.metadata[:width] > 300
         card_v_combined_options[:crop] = '300x3000+10+0'
       end
       @card_v = Rails.application.routes.url_helpers.rails_representation_url(
@@ -92,7 +92,7 @@ module ImageHelper
           img.variant(resize_to_fit: [320,320], strip: true).processed)
 
       m_card_combined_options = { resize_to_fit: [4000, 420], gravity: 'center', strip: true}
-      if img.blob.metadata[:width] > 150
+      if img.blob.metadata.has_key? :width and img.blob.metadata[:width] > 150
         m_card_combined_options[:crop] = '150x150+10+0'
       end
       @m_card = Rails.application.routes.url_helpers.rails_representation_url(

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_140434) do
+ActiveRecord::Schema.define(version: 2020_09_07_153425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,6 +383,10 @@ ActiveRecord::Schema.define(version: 2020_08_20_140434) do
     t.integer "min_participant", default: 1
     t.integer "max_participant"
     t.string "topics", array: true
+    t.boolean "paid_tour", default: true
+    t.string "currency"
+    t.boolean "hours_tour", default: true
+    t.string "hours_range"
     t.index ["latitude", "longitude"], name: "index_tours_on_latitude_and_longitude"
     t.index ["user_id"], name: "index_tours_on_user_id"
   end

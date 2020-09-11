@@ -15,7 +15,6 @@ module UsersHelper
     end
 
     def api_current_user
-
       return unless request.headers.key? 'token'
       return if request.headers['token'].blank?
       return if request.headers['token'] == 'null'
@@ -30,7 +29,6 @@ module UsersHelper
     end
 
     def current_user
-
       return unless session[:token]
 
       crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
