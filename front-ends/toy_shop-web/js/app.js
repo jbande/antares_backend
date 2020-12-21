@@ -84,6 +84,7 @@ var app6 = new Vue({
 			success: (data) => {
 
 				const text_list = data['data']['allStaticTexts'];
+				console.log(data['data']);
 				var app_keys = Object.keys(this.text_locations);
 				var app_len = app_keys.length;
 
