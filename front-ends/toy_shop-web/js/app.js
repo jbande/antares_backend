@@ -67,6 +67,7 @@ var app6 = new Vue({
 			id
 			language
 			pagePosition
+			text
 		  }
 		}`;
 
