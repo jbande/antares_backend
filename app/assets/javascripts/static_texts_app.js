@@ -96,7 +96,7 @@ var static_texts_app = new Vue({
                     pagePosition: $pagePosition
                     language: $language
                     text:$text
-                    shopUid:$shop_uid
+                    shopUid:$shopUid
                 ){
                 id
                 pagePosition
