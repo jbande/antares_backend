@@ -50,6 +50,9 @@ var images_locations = {
 
 var app6 = new Vue({
 	el: '#home',
+	props: {
+		shop_id: 'revel2020'
+	},
 	data: function (){
 		return {
 			text_locations: text_locations,
@@ -59,14 +62,21 @@ var app6 = new Vue({
 	},
 	mounted: function () {
 
-		const static_text_query = `query{
-		allStaticTexts{
-		id
-		text
-		language
-		pagePosition}}`;
+		const static_text_query = `query allStaticText($filter:StaticTextFilter){
+		  allStaticTexts(filter:$filter){
+			id
+			language
+			pagePosition
+		  }
+		}`;
 
-		var text_query = {"query": static_text_query, "variables":null};
+		var filter = {
+			filter: {
+				uid: this.shop_id
+			}
+		};
+
+		var text_query = {"query": static_text_query, "variables":filter};
 
 		$.ajax({type:"POST",
 			url:this.host_url,
@@ -87,19 +97,20 @@ var app6 = new Vue({
 			}});
 
 
-		const static_images_query = `query{
-        allStaticImages{    
-        id    
-        images{
-        id
-        original
-        v100100
-        }    
-        pagePosition
-        }}`;
+		const static_images_query = `query allStaticImages($filter:StaticImageFilter){
+		  allStaticImages(filter:$filter){
+			id    
+				images{
+				id
+				original
+				v100100
+				}    
+				pagePosition			
+		  }
+		}`;
 
 		var image_query = {"query": static_images_query,
-			"variables":null};
+			"variables":filter};
 
 		$.ajax({type:"POST",
 			url:this.host_url,
