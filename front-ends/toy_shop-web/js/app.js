@@ -95,6 +95,7 @@ var app6 = new Vue({
 						this.text_locations[value] = text_val;
 					}
 				}
+				console.log(this.text_locations)
 			}});
 
 
