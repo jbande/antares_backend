@@ -15,9 +15,10 @@ module Types
     field :all_tours, [TourType], resolver: Resolvers::TourSearch
     field :all_attractions, [AttractionType], resolver: Resolvers::AttractionSearch
 
-    field :all_static_texts, [StaticTextType], null: false
+    field :all_static_texts, [StaticTextType], resolver: Resolvers::StaticTextSearch
 
-    field :all_static_images, [StaticImageType], null: false
+    field :all_static_images, [StaticImageType], resolver: Resolvers::StaticImageSearch
+
     field :all_categories, [CategoryType], null: false
 
     field :all_accommodations, [AccommodationType], resolver: Resolvers::AccommodationSearch
@@ -38,13 +39,13 @@ module Types
       AccomComplement.all
     end
 
-    def all_static_texts
-      StaticText.all
-    end
+    # def all_static_texts
+    #   StaticText.all
+    # end
 
-    def all_static_images
-      StaticImage.all
-    end
+    # def all_static_images
+    #   StaticImage.all
+    # end
 
     def all_categories
       Category.all
