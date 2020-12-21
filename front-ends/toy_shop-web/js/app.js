@@ -33,6 +33,7 @@ var text_locations = {
 	heading4:stext,
 	heading5:stext,
 	heading55:stext,
+	aboutrevelshort:stext
 
 };
 
@@ -51,7 +52,7 @@ var app6 = new Vue({
 		return {
 			text_locations: text_locations,
 			images_locations: images_locations,
-			host_url: 'http://172.93.53.135:3444/graphql'
+			host_url: 'http://172.93.53.135:3444/graphql',
 		}
 	},
 	mounted: function () {
