@@ -109,7 +109,7 @@ var static_texts_app = new Vue({
                 pagePosition:new_static_text.pagePosition,
                 language:new_static_text.language,
                 text:new_static_text.text,
-                shop_uid:this.shop_uid
+                shopUid:this.shop_uid
             };
 
             var cdata = {query: static_text_query, variables:variables};
