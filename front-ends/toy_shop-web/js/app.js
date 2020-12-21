@@ -48,7 +48,7 @@ var app6 = new Vue({
 			host_url: 'http://172.93.53.135:3444/graphql'
 		}
 	},
-	created: function () {
+	mounted: function () {
 
 		const static_text_query = `query{
 		allStaticTexts{
@@ -65,14 +65,16 @@ var app6 = new Vue({
 			success: (data) => {
 
 				const text_list = data['data']['allStaticTexts'];
+				console.log(text_list);
 
-				var app_keys = Object.keys(this.$data);
+				var app_keys = Object.keys(this.text_locations);
+				console.log(app_keys);
 
 				var app_len = app_keys.length;
 
 				for (var i = 0; i < app_len; i++) {
 					var value = app_keys[i];
-					var text_val = text_list.find(element => element.pagePosition == value);
+					var text_val = text_list.find(element => element.pagePosition === value);
 					if (text_val){
 						this.text_locations[value] = text_val;
 					}
