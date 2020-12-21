@@ -1,0 +1,2 @@
+class AccomComplement < ApplicationRecord
+end

@@ -47,5 +47,6 @@ Rails.application.routes.draw do
   post '/user/avatar', to:'images#add_avatar', as:'add_avatar'
 
   post '/tour/add/day/image', to:'images#add_tour_day_image', as:'add_tour_day_image'
+  post '/accommodation/add/room/image', to:'images#add_room_image', as:'add_accommodation_room_image'
 
 end

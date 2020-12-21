@@ -43,7 +43,7 @@ class Resolvers::AccommodationSearch < ApplicationController
     end
 
     if value[:id]
-      scope = Accommodation.includes(:rooms).includes(:amenities).includes(:accom_extras).all.references(:rooms).where(id: value[:id])
+      scope = Accommodation.includes(:rooms).includes(:amenities).all.references(:rooms).where(id: value[:id])
     else
       scope = Accommodation.includes(:rooms).all.references(:rooms)
       scope = scope.limit(limit).offset(offset)

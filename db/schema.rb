@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_07_153425) do
+ActiveRecord::Schema.define(version: 2020_09_22_173351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_153425) do
     t.datetime "updatedAt", null: false
   end
 
-  create_table "accom_extras", force: :cascade do |t|
+  create_table "accom_complements", force: :cascade do |t|
     t.string "label"
     t.string "icon_name"
     t.datetime "created_at", precision: 6, null: false
@@ -61,16 +61,18 @@ ActiveRecord::Schema.define(version: 2020_09_07_153425) do
     t.decimal "longitude", precision: 10, scale: 6
     t.bigint "region_id"
     t.string "address"
+    t.integer "double_beds", default: 0
+    t.integer "single_beds", default: 0
+    t.integer "bunked_beds", default: 0
+    t.integer "baby_beds", default: 0
+    t.decimal "high_season_price", precision: 10, scale: 2
+    t.decimal "low_season_price", precision: 10, scale: 2
+    t.integer "included_services", default: [], array: true
+    t.integer "excluded_services", default: [], array: true
+    t.integer "rent_mode", default: 0
     t.index ["latitude", "longitude"], name: "index_accommodations_on_latitude_and_longitude"
     t.index ["region_id"], name: "index_accommodations_on_region_id"
     t.index ["user_id"], name: "index_accommodations_on_user_id"
-  end
-
-  create_table "accommodations_accom_extras", force: :cascade do |t|
-    t.bigint "accommodation_id", null: false
-    t.bigint "accom_extra_id", null: false
-    t.index ["accom_extra_id"], name: "index_accommodations_accom_extras_on_accom_extra_id"
-    t.index ["accommodation_id"], name: "index_accommodations_accom_extras_on_accommodation_id"
   end
 
   create_table "accommodations_amenities", force: :cascade do |t|
@@ -267,6 +269,12 @@ ActiveRecord::Schema.define(version: 2020_09_07_153425) do
     t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "high_season_price", precision: 10, scale: 2
+    t.decimal "low_season_price", precision: 10, scale: 2
+    t.integer "double_beds"
+    t.integer "single_beds"
+    t.integer "bunked_beds"
+    t.integer "baby_beds"
     t.index ["accommodation_id"], name: "index_rooms_on_accommodation_id"
   end
 
@@ -417,8 +425,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_153425) do
 
   add_foreign_key "accommodations", "regions"
   add_foreign_key "accommodations", "users"
-  add_foreign_key "accommodations_accom_extras", "accom_extras"
-  add_foreign_key "accommodations_accom_extras", "accommodations"
   add_foreign_key "accommodations_amenities", "accommodations"
   add_foreign_key "accommodations_amenities", "amenities"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

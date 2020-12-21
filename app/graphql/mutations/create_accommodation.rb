@@ -8,6 +8,9 @@ module Mutations
       argument :descriptions, [Types::DescriptionTypeInput], required: false
       argument :region_id, Int, required: true
       argument :amenities, [Int], required: false
+      argument :includedServices, [Int], required: false
+      argument :excludedServices, [Int], required: false
+      argument :rooms, [Types::RoomTypeInput], required: false
     end
 
     argument :input_data, AccommodationInputData, required: false
@@ -31,6 +34,32 @@ module Mutations
             entity.amenities.append(am)
           end
         end
+      end
+
+      #entity.save
+
+      input_data&.[](:rooms).each do |room_item|
+        new_room = Room.new(
+            price: room_item[:price],
+            room_number: room_item[:room_number],
+            high_season_price: room_item[:high_season_price],
+            low_season_price: room_item[:low_season_price],
+            double_beds: room_item[:double_beds],
+            single_beds: room_item[:single_beds],
+            bunked_beds: room_item[:bunked_beds],
+            baby_beds: room_item[:baby_beds]
+        )
+        add_descriptions(new_room, room_item)
+
+        room_item[:room_amenities].each do |am_id|
+          amenity = RoomAmenity.find_by_id am_id
+          if amenity
+            new_room.room_amenities.append(amenity)
+          end
+        end
+
+        entity.rooms.append(new_room)
+
       end
 
       current_user.accommodations.append(entity)

@@ -77,7 +77,24 @@ class ImagesController < ApplicationController
       res = {code:201}
     end
     render status: 200, json: res
+  end
 
+  def add_room_image
+    current_user = get_current_user
+    return unless current_user
+
+    accommodation = current_user.accommodations.find_by_id params[:accommodation_id]
+    return unless accommodation
+
+    room = accommodation.rooms.find_by_room_number params[:room_number]
+    return unless room
+
+    if room.images.attach(params[:image])
+      res = {code: 100}
+    else
+      res = {code:201}
+    end
+    render status: 200, json: res
   end
 
   def remove_image

@@ -34,9 +34,15 @@ var text_locations = {
     image2:simage
 };
 
+
 var app6 = new Vue({
 	el: '#home',
-	data: text_locations,
+	data: function (){
+		return {
+			text_locations: text_locations,
+			host_url: 'http://172.93.53.135:3444/graphql'
+		}
+	},
 	created: function () {
 
 		const static_text_query = `query{
@@ -49,7 +55,7 @@ var app6 = new Vue({
 		var text_query = {"query": static_text_query, "variables":null};
 
 		$.ajax({type:"POST",
-			url:"http://localhost:3444/graphql",
+			url:this.host_url,
 			data:text_query,
 			success: (data) => {
 
@@ -63,7 +69,7 @@ var app6 = new Vue({
 					var value = app_keys[i];
 					var text_val = text_list.find(element => element.pagePosition == value);
 					if (text_val){
-						this[value] = text_val;
+						this.text_locations[value] = text_val;
 					}
 				}
 			}});
@@ -84,7 +90,7 @@ var app6 = new Vue({
 			"variables":null};
 
 		$.ajax({type:"POST",
-			url:"http://localhost:3444/graphql",
+			url:this.host_url,
 			data:image_query,
 			success: (data) => {
 
@@ -99,7 +105,7 @@ var app6 = new Vue({
 					var image_val = images_list.find(element => element.pagePosition == value);
 
 					if (image_val) {
-						this[value] = image_val["images"][0]
+						this.text_locations[value] = image_val["images"][0]
 					}
 				}
 			}

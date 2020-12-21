@@ -26,10 +26,15 @@ module Types
     field :all_taxis, [TaxiType], resolver: Resolvers::TaxiSearch
 
     field :logged_user, UserType, null: true
+    field :all_accom_complements, [AccomComplementType], null: false
 
     #def all_users
     #  User.all
     #end
+
+    def all_accom_complements
+      AccomComplement.all
+    end
 
     def all_static_texts
       StaticText.all

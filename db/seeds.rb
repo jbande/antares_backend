@@ -26,12 +26,12 @@ cuban_regions = ["Pinar del Rio",
 "Granma"]
 
 
-juan = User.find_or_create_by(
-    first_name: 'Juan',
-    last_name: 'Perez',
-    email: 'juanperez@gmail.com',
-    password: '111111'
-)
+# juan = User.find_or_create_by(
+#     first_name: 'Juan',
+#     last_name: 'Perez',
+#     email: 'juanperez@gmail.com',
+#     password: '111111'
+# )
 
 cuban_regions.each do |reg|
   Region.find_or_create_by(name: reg, country_code: 'CU')
@@ -47,15 +47,20 @@ amenities = [
     {label: "lunch", icon_name:  "i-lunch"},
 ]
 
-acc_extras = [
-    {label: "air-conditioner", icon_name:  "i-air-conditioner"},
-    {label: "balcony", icon_name:  "i-balcony"},
+acc_complements = [
+
+    {label: "wifi", icon_name:  "i-wifi"},
+    {label: "pets-care", icon_name:  "i-pet"},
     {label: "breakfast", icon_name:  "i-breakfast"},
-    {label: "cocktail", icon_name:  "i-cocktail"},
+    {label: "tv", icon_name:  "i-tv"},
+    {label: "lunch", icon_name:  "i-lunch"},
     {label: "dinner", icon_name:  "i-dinner"},
     {label: "laundry-service", icon_name:  "i-laundry-service"},
-    {label: "lunch", icon_name:  "i-lunch"},
-    {label: "prize", icon_name:  "i-prize"},
+    {label: "cocktail", icon_name:  "i-cocktail"},
+    {label: "child-care", icon_name:  "i-child-care"},
+    {label: "parking", icon_name:  "i-parking"},
+    {label: "airport-transfers", icon_name:  "i-airport-transfers"},
+
 
 ]
 
@@ -69,8 +74,8 @@ room_amenities = [
     {label: "safe", icon_name:  "i-safe"},
 ]
 
-acc_extras.each do |ex|
-  AccomExtra.find_or_create_by(ex)
+acc_complements.each do |ex|
+  AccomComplement.find_or_create_by(ex)
 end
 
 amenities.each do |am|
