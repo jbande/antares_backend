@@ -31,6 +31,8 @@ var text_locations = {
 	heading2:stext,
 	heading3:stext,
 	heading4:stext,
+	heading5:stext,
+	heading55:stext,
 
 };
 
