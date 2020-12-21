@@ -91,11 +91,12 @@ var static_texts_app = new Vue({
 
         saveStaticText: function (new_static_text) {
 
-            var static_text_query = `mutation ($pagePosition:String!, $language:String!, $text:String) {
+            var static_text_query = `mutation ($pagePosition:String!, $language:String!, $text:String, $shop_uid:String) {
                 createStaticText(
                     pagePosition: $pagePosition
                     language: $language
                     text:$text
+                    shop_uid:$shop_uid
                 ){
                 id
                 pagePosition
@@ -107,7 +108,8 @@ var static_texts_app = new Vue({
             var variables = {
                 pagePosition:new_static_text.pagePosition,
                 language:new_static_text.language,
-                text:new_static_text.text
+                text:new_static_text.text,
+                shop_uid:this.shop_uid
             };
 
             var cdata = {query: static_text_query, variables:variables};

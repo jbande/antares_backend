@@ -35,7 +35,8 @@ var text_locations = {
 	heading55:stext,
 	aboutrevelshort:stext,
 	address1: stext,
-	address2: stext
+	address2: stext,
+	section2heading: stext,
 
 };
 
