@@ -52,6 +52,8 @@
                 method="post" @submit="closeModal">
             <input type="hidden" name="_method" value="patch">
 
+            <input type="text" name="shop_uid">
+
             <input placeholder="page position" v-model="on_edit_static_image.pagePosition"
                    type="text" name="static_image[page_position]"
                    id="static_image_page_position"><br>

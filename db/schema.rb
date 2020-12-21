@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_173351) do
+ActiveRecord::Schema.define(version: 2020_12_21_190421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -285,10 +285,20 @@ ActiveRecord::Schema.define(version: 2020_09_22_173351) do
     t.index ["room_id"], name: "index_rooms_room_amenities_on_room_id"
   end
 
+  create_table "shops", force: :cascade do |t|
+    t.string "name"
+    t.string "uid", limit: 64
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_shops_on_uid", unique: true
+  end
+
   create_table "static_images", force: :cascade do |t|
     t.string "page_position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_static_images_on_shop_id"
   end
 
   create_table "static_texts", force: :cascade do |t|
@@ -297,6 +307,8 @@ ActiveRecord::Schema.define(version: 2020_09_22_173351) do
     t.string "page_position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_static_texts_on_shop_id"
   end
 
   create_table "taxi_amenities", force: :cascade do |t|

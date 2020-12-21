@@ -4,16 +4,23 @@ module Mutations
     argument :language, String, required: true
     argument :text, String, required: false
     argument :page_position, String, required: true
+    argument :shop_uid, String, required: true
 
     type Types::StaticTextType
 
-    def resolve(language: nil, text: nil, page_position: nil)
-      static_text = StaticText.new(
+    def resolve(language: nil, text: nil, page_position: nil, shop_uid: nil)
+
+      shop = Shop.find_by_uid shop_uid
+
+      return unless shop
+
+      static_text = shop.static_texts.new(
           text: text,
           language: language,
           page_position: page_position,
       )
-      static_text.save
+      shop.static_texts.append(static_text)
+      shop.save
       static_text
     end
   end

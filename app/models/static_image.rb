@@ -1,6 +1,7 @@
 
 include ImageHelper
 class StaticImage < ApplicationRecord
+  belongs_to :shop
   include Rails.application.routes.url_helpers
 
   has_one_attached :image

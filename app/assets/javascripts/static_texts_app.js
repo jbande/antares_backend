@@ -7,6 +7,7 @@ var static_texts_app = new Vue({
     el: '#static_texts',
     data: {
         host_url: 'http://172.93.53.135:3444/graphql',
+        shop_uid: '',
         static_texts: [
             { text: 'Learn JavaScript' }
         ],

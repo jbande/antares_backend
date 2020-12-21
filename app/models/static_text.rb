@@ -1,4 +1,6 @@
 class StaticText < ApplicationRecord
+  belongs_to :shop
+
   def update_on_changes(**args)
     attrs = {}
     args.each do |key, val|

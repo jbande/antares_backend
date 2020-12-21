@@ -16,13 +16,18 @@ class StaticImagesController < ApplicationController
   end
 
   def create
+    shop_uid = params.require(:shop_uid)
     page_position = params.require(:static_image).permit(:page_position)["page_position"]
-
     image = params.require(:static_image).permit(images: [])["images"][0]
 
-    static_image = StaticImage.new(page_position:page_position)
-    static_image.image = image
-    static_image.save
+    shop = Shop.find_by_uid shop_uid
+
+    if shop
+      static_image = shop.static_images.new(page_position:page_position)
+      static_image.image = image
+      static_image.save
+      shop.static_images.append(static_image)
+    end
 
     redirect_to static_images_show_path static_image
   end

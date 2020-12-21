@@ -28,6 +28,8 @@ module Types
     field :logged_user, UserType, null: true
     field :all_accom_complements, [AccomComplementType], null: false
 
+    field :all_shops, [ShopType], null: true
+
     #def all_users
     #  User.all
     #end
@@ -59,6 +61,10 @@ module Types
 
     def logged_user
       context[:current_user]
+    end
+
+    def all_shops
+      Shop.all
     end
 
     #def all_offers

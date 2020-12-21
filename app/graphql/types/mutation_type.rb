@@ -56,5 +56,7 @@ module Types
     field :create_attraction, mutation: Mutations::CreateAttraction
     field :update_attraction, mutation: Mutations::UpdateAttraction
 
+    field :create_shop, mutation: Mutations::CreateShop
+
   end
 end
