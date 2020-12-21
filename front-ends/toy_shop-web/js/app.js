@@ -24,7 +24,7 @@ var text_locations = {
 	mailto: stext,
 	contactphone: stext,
 	sitetittle:stext,
-	serevicetab: stext,
+	servicetab: stext,
 	heading1: stext,
 	heading11:stext,
 	heading1text:stext,
