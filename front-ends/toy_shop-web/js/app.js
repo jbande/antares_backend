@@ -35,7 +35,8 @@ var images_locations = {
 	pane6: simage,
 	image78:simage,
 	bp_img_3:simage,
-	image2:simage
+	image2:simage,
+	portrait1: simage
 };
 
 
