@@ -33,7 +33,9 @@ var text_locations = {
 	heading4:stext,
 	heading5:stext,
 	heading55:stext,
-	aboutrevelshort:stext
+	aboutrevelshort:stext,
+	address1: stext,
+	address2: stext
 
 };
 
