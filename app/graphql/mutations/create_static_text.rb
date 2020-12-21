@@ -10,8 +10,6 @@ module Mutations
 
     def resolve(language: nil, text: nil, page_position: nil, shop_uid: nil)
 
-      byebug
-
       shop = Shop.find_by_uid shop_uid
 
       return unless shop
