@@ -24,14 +24,18 @@ var text_locations = {
 	mailto: stext,
 	contactphone: stext,
 	sitetittle:stext,
-	servicetab: stext,
+	serevicetab: stext,
 	heading1: stext,
 	heading11:stext,
-	pane6: simage,
 	heading1text:stext,
+
+};
+
+var images_locations = {
+	pane6: simage,
 	image78:simage,
 	bp_img_3:simage,
-    image2:simage
+	image2:simage
 };
 
 
@@ -40,6 +44,7 @@ var app6 = new Vue({
 	data: function (){
 		return {
 			text_locations: text_locations,
+			images_locations: images_locations,
 			host_url: 'http://172.93.53.135:3444/graphql'
 		}
 	},
@@ -105,7 +110,7 @@ var app6 = new Vue({
 					var image_val = images_list.find(element => element.pagePosition == value);
 
 					if (image_val) {
-						this.text_locations[value] = image_val["images"][0]
+						this.images_locations[value] = image_val["images"][0]
 					}
 				}
 			}
