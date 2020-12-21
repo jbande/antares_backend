@@ -28,7 +28,9 @@ class Resolvers::StaticImageSearch < ApplicationController
 
   def normalize_filters(value, branches = [])
 
-    scope = StaticImage.where(shop_id: value[:uid])
+    shop = Shop.find_by_uid value[:uid]
+
+    scope = StaticImage.where(shop_id: shop.id)
 
     #scope = scope.where('name LIKE ?', "%#{value[:name_contains]}%") if value[:name_contains]
     #scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%") if value[:description_contains]
