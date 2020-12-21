@@ -6,6 +6,7 @@
 var static_texts_app = new Vue({
     el: '#static_texts',
     data: {
+        host_url: 'http://172.93.53.135:3444/graphql',
         static_texts: [
             { text: 'Learn JavaScript' }
         ],
@@ -27,7 +28,7 @@ var static_texts_app = new Vue({
 
         $.ajax(
             {type:"POST",
-            url:"http://localhost:3444/graphql",
+            url:this.host_url,
             data:cdata,
             success: (data) => {
                 var static_ar = data['data']['allStaticTexts'];
@@ -75,7 +76,7 @@ var static_texts_app = new Vue({
 
             $.ajax(
                 {type:"POST",
-                    url:"http://localhost:3444/graphql",
+                    url:this.host_url,
                     data:JSON.stringify(cdata),
                     success: (data) => {
                         var static_ar = data['data'];
@@ -112,7 +113,7 @@ var static_texts_app = new Vue({
 
             $.ajax(
                 {type:"POST",
-                    url:"http://localhost:3444/graphql",
+                    url:this.host_url,
                     data:JSON.stringify(cdata),
                     success: (data) => {
                         var static_ar = data['data']['createStaticText'];

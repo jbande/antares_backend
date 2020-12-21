@@ -6,6 +6,7 @@
 var static_images_app = new Vue({
     el: '#static_images',
     data: {
+        host_url: 'http://172.93.53.135:3444/graphql',
         static_images: [
             {
                 pagePosition: 'Learn JavaScript',
@@ -45,7 +46,7 @@ var static_images_app = new Vue({
 
         $.ajax(
             {type:"POST",
-                url:"http://localhost:3444/graphql",
+                url:this.host_url,
                 data:cdata,
                 success: (data) => {
                     var static_ar = data['data']['allStaticImages'];
