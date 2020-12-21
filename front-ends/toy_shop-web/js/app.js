@@ -65,11 +65,7 @@ var app6 = new Vue({
 			success: (data) => {
 
 				const text_list = data['data']['allStaticTexts'];
-				console.log(text_list);
-
 				var app_keys = Object.keys(this.text_locations);
-				console.log(app_keys);
-
 				var app_len = app_keys.length;
 
 				for (var i = 0; i < app_len; i++) {
@@ -78,7 +74,6 @@ var app6 = new Vue({
 					if (text_val){
 						this.text_locations[value] = text_val;
 					}
-					console.log(this.text_locations);
 				}
 			}});
 
@@ -104,13 +99,13 @@ var app6 = new Vue({
 
 				const images_list = data['data']['allStaticImages'];
 
-				var app_keys = Object.keys(this.$data);
+				var app_keys = Object.keys(this.images_locations);
 
 				var app_len = app_keys.length;
 
 				for (var i = 0; i < app_len; i++) {
 					var value = app_keys[i];
-					var image_val = images_list.find(element => element.pagePosition == value);
+					var image_val = images_list.find(element => element.pagePosition === value);
 
 					if (image_val) {
 						this.images_locations[value] = image_val["images"][0]
