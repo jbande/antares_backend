@@ -7,12 +7,19 @@ module Mutations
     argument :start_date, String, required: false
     argument :end_date, String, required: false
     argument :price, Float, required: true
+    argument :shop_uid, String, required: true
+
 
     type Types::OfferType
 
-    def resolve(product_id: nil, title: nil, description: nil, start_date: nil, end_date: nil, price: nil)
+    def resolve(product_id: nil, title: nil, description: nil, start_date: nil,
+                end_date: nil, price: nil, shop_uid: nil)
 
       current_user = context[:current_user]
+      return unless current_user
+
+      shop = current_user.shops.find_by_uid shop_uid
+      return unless shop
 
       product = Product.find_by_id(product_id)
       return unless product
@@ -27,7 +34,8 @@ module Mutations
             end_date: end_date,
             user_id: current_user.id,
             product_id: product.id,
-            price:price
+            price:price,
+            shop: shop
         )
         offer.save
       end

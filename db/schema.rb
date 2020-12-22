@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_21_190421) do
+ActiveRecord::Schema.define(version: 2020_12_22_155319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,8 @@ ActiveRecord::Schema.define(version: 2020_12_21_190421) do
     t.string "page_position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_categories_on_shop_id"
   end
 
   create_table "categories_offers", force: :cascade do |t|
@@ -228,7 +230,9 @@ ActiveRecord::Schema.define(version: 2020_12_21_190421) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "price", precision: 10, scale: 2
+    t.bigint "shop_id"
     t.index ["product_id"], name: "index_offers_on_product_id"
+    t.index ["shop_id"], name: "index_offers_on_shop_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end
 
@@ -244,6 +248,8 @@ ActiveRecord::Schema.define(version: 2020_12_21_190421) do
     t.date "produced_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_products_on_shop_id"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
@@ -290,7 +296,9 @@ ActiveRecord::Schema.define(version: 2020_12_21_190421) do
     t.string "uid", limit: 64
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["uid"], name: "index_shops_on_uid", unique: true
+    t.index ["user_id"], name: "index_shops_on_user_id"
   end
 
   create_table "static_images", force: :cascade do |t|

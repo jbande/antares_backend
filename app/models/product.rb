@@ -7,6 +7,7 @@ class Product < ApplicationRecord
 
   has_many_attached :images
   belongs_to :user
+  belongs_to :shop
   has_many :offers
   has_and_belongs_to_many :categories
 

@@ -14,7 +14,7 @@ class Resolvers::StaticTextSearch < ApplicationController
   # inline input type definition for the advanced filter
   class StaticTextFilter < ::Types::BaseInputObject
     argument :OR, [self], required: false
-    argument :uid, String, required: false
+    argument :shop_uid, String, required: false
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
@@ -28,7 +28,7 @@ class Resolvers::StaticTextSearch < ApplicationController
 
   def normalize_filters(value, branches = [])
 
-    shop = Shop.find_by_uid value[:uid]
+    shop = Shop.find_by_uid value[:shop_uid]
 
     scope = StaticText.where(shop_id: shop.id)
 

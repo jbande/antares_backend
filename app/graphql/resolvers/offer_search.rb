@@ -27,6 +27,7 @@ class Resolvers::OfferSearch
     argument :categories, [Int], required: false
     argument :top_price, Int, required: false
     argument :bottom_price, Int, required: false
+    argument :shop_uid, String, required: true
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
@@ -39,8 +40,11 @@ class Resolvers::OfferSearch
   end
 
   def normalize_filters(value, branches = [])
+
+    shop = Shop.find_by_uid value[:shop_uid]
+
     if value[:categories]
-      scope = Offer.includes(:categories).where('categories.id in (?)', value[:categories]).references(:categories)
+      scope = Offer.includes(:categories).where(shop_id: shop.id).where('categories.id in (?)', value[:categories]).references(:categories)
     else
       scope = Offer.all
     end

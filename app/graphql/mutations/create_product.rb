@@ -8,10 +8,19 @@ module Mutations
     argument :stock, Integer, required: false
     argument :expiry_date, String, required: false
     argument :produced_date, String, required: false
+    argument :shop_uid, String, required: true
 
     type Types::ProductType
 
-    def resolve(name: nil, description: nil, maker: nil, brand: nil, model: nil, stock: nil, expiry_date: nil, produced_date: nil)
+    def resolve(name: nil, description: nil, maker: nil, brand: nil, model: nil,
+                stock: nil, expiry_date: nil, produced_date: nil, shop_uid: nil)
+
+      current_user = context[:current_user]
+      return unless current_user
+
+      shop = current_user.shops.find_by_uid shop_uid
+      return unless shop
+
       Product.create!(
           name: name,
           description: description,
@@ -21,7 +30,8 @@ module Mutations
           stock: stock,
           expiry_date: expiry_date,
           produced_date: produced_date,
-          user: context[:current_user]
+          user: context[:current_user],
+          shop: shop
       )
     end
   end

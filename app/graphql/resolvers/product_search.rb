@@ -19,6 +19,7 @@ class Resolvers::ProductSearch < ApplicationController
     argument :model_contains, String, required: false
     argument :brand_contains, String, required: false
     argument :categories, [Int], required: false
+    argument :shop_uid, String, required: true
   end
 
   # when "filter" is passed "apply_filter" would be called to narrow the scope
@@ -32,8 +33,10 @@ class Resolvers::ProductSearch < ApplicationController
 
   def normalize_filters(value, branches = [])
 
+    shop = Shop.find_by_uid value[:shop_uid]
+
     if value[:categories]
-      scope = Product.includes(:categories).where('categories.id in (?)', value[:categories]).references(:categories)
+      scope = Product.includes(:categories).where(shop_id: shop.id).where('categories.id in (?)', value[:categories]).references(:categories)
     else
       scope = Product.all
     end

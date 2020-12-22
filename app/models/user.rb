@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :accommodations
   has_many :taxis
   has_many :attractions
+  has_many :shops
 
   def avatar_urls
     new_type = nil
