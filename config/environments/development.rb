@@ -59,4 +59,6 @@ Rails.application.configure do
 
   #Rails.application.config.action_controller.forgery_protection_origin_check = false
 
+  config.hosts << "antares_backend"
+
 end
