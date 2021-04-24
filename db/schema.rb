@@ -15,31 +15,6 @@ ActiveRecord::Schema.define(version: 2020_12_22_155319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "Products", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.text "description"
-    t.string "maker_name", limit: 255
-    t.string "brand", limit: 255
-    t.string "model", limit: 255
-    t.datetime "produced_date"
-    t.datetime "expiry_date"
-    t.integer "stock"
-    t.datetime "createdAt", null: false
-    t.datetime "updatedAt", null: false
-    t.integer "user_id"
-  end
-
-  create_table "SequelizeMeta", primary_key: "name", id: :string, limit: 255, force: :cascade do |t|
-  end
-
-  create_table "Users", id: :serial, force: :cascade do |t|
-    t.string "firstName", limit: 255
-    t.string "lastName", limit: 255
-    t.string "email", limit: 255
-    t.datetime "createdAt", null: false
-    t.datetime "updatedAt", null: false
-  end
-
   create_table "accom_complements", force: :cascade do |t|
     t.string "label"
     t.string "icon_name"

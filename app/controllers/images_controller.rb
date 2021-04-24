@@ -11,7 +11,8 @@ class ImagesController < ApplicationController
         attraction: Attraction,
         taxi: Taxi,
         user: User,
-        tour_day: TourDay
+        tour_day: TourDay,
+        product: Product
     }
     super
   end

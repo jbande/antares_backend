@@ -15,12 +15,14 @@ module UsersHelper
     end
 
     def api_current_user
-      return unless request.headers.key? 'token'
-      return if request.headers['token'].blank?
-      return if request.headers['token'] == 'null'
+      return unless request.headers.key? 'Authorization'
+      return if request.headers['Authorization'].blank?
+      return if request.headers['Authorization'] == 'null'
+
+      res = request.headers['Authorization'].split(' ')
 
       crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-      token = crypt.decrypt_and_verify request.headers['token']
+      token = crypt.decrypt_and_verify res[1]
 
       user_id = token.gsub('user-id:', '').to_i
       User.find user_id

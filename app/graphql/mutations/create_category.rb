@@ -9,10 +9,18 @@ module Mutations
     type Types::CategoryType
 
     def resolve(name: nil, page_position: nil, parent_category_id: nil)
+
+      current_user = context[:current_user]
+      return unless current_user
+
+      shop = current_user.shops.find_by_uid "default-uid"
+      return unless shop
+
       category = Category.new(
             name: name,
             parent_category_id: parent_category_id,
-            page_position: page_position
+            page_position: page_position,
+            shop: shop
       )
       category.save
       category
@@ -72,12 +80,21 @@ module Mutations
 
     def resolve(id: nil)
       category = Category.find_by_id(id)
-      if category
-        category.destroy
-        result = {ret: 'OK', code: 'SUCCESS', msg:'object deleted'}
+
+      subordinates = Category.find_by_parent_category_id category.id
+      if not subordinates
+
+        if category
+          category.destroy
+          result = {ret: 'OK', code: 'SUCCESS', msg:'object deleted'}
+        else
+          result = {ret: 'ERROR', code: 'OBJECT-NOT-FOUND', msg:'could not find object'}
+        end
+
       else
-        result = {ret: 'ERROR', code: 'OBJECT-NOT-FOUND', msg:'could not find object'}
+        result = {ret: 'ERROR', code: 'SUBORDINATES-FOUND', msg:'This category has subcategories. Please delete subcategories first.'}
       end
+
       result
     end
   end

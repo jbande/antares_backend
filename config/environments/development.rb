@@ -54,8 +54,8 @@ Rails.application.configure do
 
   config.active_storage.service = :local
 
-  #Rails.application.routes.default_url_options[:host] = 'localhost:3444'
-  Rails.application.routes.default_url_options[:host] = '172.93.53.135:3444'
+  Rails.application.routes.default_url_options[:host] = 'localhost:3444'
+  #Rails.application.routes.default_url_options[:host] = '172.93.53.135:3444'
 
   #Rails.application.config.action_controller.forgery_protection_origin_check = false
 

@@ -42,7 +42,6 @@ module Mutations
               uid: firebase_user_json['localId'],
               notification_token: notification_token
           )
-
         else
           user = User.create!(
               first_name: first_name,
@@ -51,6 +50,10 @@ module Mutations
               password: auth_provider&.[](:credentials)&.[](:password),
               notification_token: notification_token
           )
+        end
+
+        if user
+          user.shops.create!(name: "Default", uid:"default-uid")
         end
 
         crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))

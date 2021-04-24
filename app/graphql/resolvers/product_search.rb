@@ -14,6 +14,7 @@ class Resolvers::ProductSearch < ApplicationController
   # inline input type definition for the advanced filter
   class ProductFilter < ::Types::BaseInputObject
     argument :OR, [self], required: false
+    argument :id, Int, required: false
     argument :name_contains, String, required: false
     argument :description_contains, String, required: false
     argument :model_contains, String, required: false
@@ -40,6 +41,8 @@ class Resolvers::ProductSearch < ApplicationController
     else
       scope = Product.all
     end
+
+    scope = scope.where('id = ?', "#{value[:id]}") if value[:id]
     scope = scope.where('name LIKE ?', "%#{value[:name_contains]}%") if value[:name_contains]
     scope = scope.where('description LIKE ?', "%#{value[:description_contains]}%") if value[:description_contains]
     scope = scope.where('model LIKE ?', "%#{value[:model_contains]}%") if value[:model_contains]
