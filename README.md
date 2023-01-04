@@ -1,9 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+Antares backend is a RubyOnRails + GraphQL backend that you can use to develop a market place application.
 
 * Ruby version
   ruby 2.5.1p57 
